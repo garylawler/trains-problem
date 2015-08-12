@@ -41,28 +41,31 @@ public class CountPathsWithAtLeastAGivenNumberOfStopsTest {
         graph.setEdgeWeight(graph.addEdge(NamedVertex.C, NamedVertex.B), 4);
 
         pathsWithAtLeastAGivenNumberOfStops.traverse();
-        assertThat(pathsWithAtLeastAGivenNumberOfStops.getNoOfRoutes(), is(2d));
-    }
-
-    @Test
-    public void withAdditionalCircuitButOnlyLookingForRouteOfDepthOne() {
-        pathsWithAtLeastAGivenNumberOfStops = new CountPathsWithAtLeastAGivenNumberOfStops<>(graph, NamedVertex.A, NamedVertex.B, 1);
-        graph.addVertex(NamedVertex.C);
-        graph.setEdgeWeight(graph.addEdge(NamedVertex.A, NamedVertex.C), 3);
-        graph.setEdgeWeight(graph.addEdge(NamedVertex.C, NamedVertex.B), 4);
-
-        pathsWithAtLeastAGivenNumberOfStops.traverse();
         assertThat(pathsWithAtLeastAGivenNumberOfStops.getNoOfRoutes(), is(1d));
     }
 
     @Test
-    public void noPathOfLengthExists() {
-        pathsWithAtLeastAGivenNumberOfStops = new CountPathsWithAtLeastAGivenNumberOfStops<>(graph, NamedVertex.A, NamedVertex.B, 10);
+    public void withAdditionalCircuitSearchShouldEncompassCircuit() {
+        pathsWithAtLeastAGivenNumberOfStops = new CountPathsWithAtLeastAGivenNumberOfStops<>(graph, NamedVertex.A, NamedVertex.B, 3);
         graph.addVertex(NamedVertex.C);
         graph.setEdgeWeight(graph.addEdge(NamedVertex.A, NamedVertex.C), 3);
         graph.setEdgeWeight(graph.addEdge(NamedVertex.C, NamedVertex.B), 4);
 
         pathsWithAtLeastAGivenNumberOfStops.traverse();
-        assertThat(pathsWithAtLeastAGivenNumberOfStops.getNoOfRoutes(), is(0d));
+        assertThat(pathsWithAtLeastAGivenNumberOfStops.getNoOfRoutes(), is(2d));
+    }
+
+    @Test
+    public void additionalPathExceedsSearchRadius() {
+        pathsWithAtLeastAGivenNumberOfStops = new CountPathsWithAtLeastAGivenNumberOfStops<>(graph, NamedVertex.A, NamedVertex.B, 3);
+        graph.addVertex(NamedVertex.C);
+        graph.addVertex(NamedVertex.D);
+        graph.addVertex(NamedVertex.E);
+        graph.setEdgeWeight(graph.addEdge(NamedVertex.A, NamedVertex.C), 3);
+        graph.setEdgeWeight(graph.addEdge(NamedVertex.C, NamedVertex.D), 4);
+        graph.setEdgeWeight(graph.addEdge(NamedVertex.D, NamedVertex.E), 5);
+
+        pathsWithAtLeastAGivenNumberOfStops.traverse();
+        assertThat(pathsWithAtLeastAGivenNumberOfStops.getNoOfRoutes(), is(1d));
     }
 }
