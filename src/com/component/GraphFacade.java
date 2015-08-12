@@ -1,16 +1,12 @@
 package com.component;
 
-import com.algorithm.CountPathsWithNumberOfStops;
 import com.algorithm.CountPathsWithAtLeastAGivenNumberOfStops;
-import com.factory.AlgorithmFactory;
+import com.algorithm.CountPathsWithNumberOfStops;
 import com.exception.PathNotFoundException;
+import com.factory.AlgorithmFactory;
 import org.jgrapht.alg.DijkstraShortestPath;
-import org.jgrapht.alg.cycle.TarjanSimpleCycles;
 import org.jgrapht.graph.DefaultWeightedEdge;
 import org.jgrapht.graph.SimpleDirectedWeightedGraph;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class GraphFacade {
     private SimpleDirectedWeightedGraph<NamedVertex, DefaultWeightedEdge> directedGraph;
@@ -50,33 +46,6 @@ public class GraphFacade {
         CountPathsWithNumberOfStops<NamedVertex, DefaultWeightedEdge> depthFirstPathCounter = algorithmFactory.createCountPathsWithNumberOfStops(startNode, endNode, numberOfStops);
         depthFirstPathCounter.traverse();
         return depthFirstPathCounter.getNoOfRoutesAtTargetDepth();
-    }
-
-    public List<NamedVertex> getCycleContainingNode(String node) {
-        for(List<NamedVertex> nodeList : getCycles()) {
-            if(nodeList.contains(node)) {
-                return nodeList;
-            }
-        }
-        return new ArrayList<>();
-    }
-
-    public double getCycleLength(List<NamedVertex> nodes) {
-        int lengthOfCycle = 0;
-        int numberOfNodes = nodes.size();
-        if(numberOfNodes > 1) {
-            for(int i=1; i< numberOfNodes; i++) {
-                lengthOfCycle += getEdgeWeight(nodes.get(i-1), nodes.get(i));
-            }
-            lengthOfCycle += getEdgeWeight(nodes.get(numberOfNodes-1), nodes.get(0));
-        }
-        return lengthOfCycle;
-
-    }
-
-    public List<List<NamedVertex>> getCycles() {
-        TarjanSimpleCycles<NamedVertex, DefaultWeightedEdge> simpleCycles = algorithmFactory.createTarjanSimpleCycles();
-        return simpleCycles.findSimpleCycles();
     }
 
     private void addVertex(NamedVertex vertex) {

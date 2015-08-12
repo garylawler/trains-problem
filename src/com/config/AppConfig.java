@@ -3,6 +3,7 @@ package com.config;
 import com.factory.AlgorithmFactory;
 import com.component.GraphFacade;
 import com.component.NamedVertex;
+import com.service.RailwayService;
 import org.jgrapht.graph.DefaultWeightedEdge;
 import org.jgrapht.graph.SimpleDirectedWeightedGraph;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,5 +29,11 @@ public class AppConfig {
     @Autowired
     GraphFacade getGraphFacade(SimpleDirectedWeightedGraph<NamedVertex, DefaultWeightedEdge> graph, AlgorithmFactory algorithmFactory) {
         return new GraphFacade(graph, algorithmFactory);
+    }
+
+    @Bean
+    @Autowired
+    RailwayService getRailwayService(GraphFacade graphFacade, AlgorithmFactory algorithmFactory) {
+        return new RailwayService(graphFacade, algorithmFactory);
     }
 }

@@ -2,9 +2,8 @@ import com.component.GraphFacade;
 import com.component.NamedVertex;
 import com.config.AppConfig;
 import com.exception.PathNotFoundException;
+import com.service.RailwayService;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-
-import java.util.List;
 
 public class MyClass {
 
@@ -13,6 +12,7 @@ public class MyClass {
 
 
         GraphFacade graph = ctx.getBean(GraphFacade.class);
+        RailwayService railwayService = ctx.getBean(RailwayService.class);
 
         graph.addEdge(NamedVertex.A, NamedVertex.B, 5);
         graph.addEdge(NamedVertex.B, NamedVertex.C, 4);
@@ -24,17 +24,14 @@ public class MyClass {
         graph.addEdge(NamedVertex.E, NamedVertex.B, 3);
         graph.addEdge(NamedVertex.A, NamedVertex.E, 7);
 
-
-
-
         System.out.println("1-5 ----------------------");
 
-        System.out.println(graph.getEdgeWeight(NamedVertex.A, NamedVertex.B) + graph.getEdgeWeight(NamedVertex.B, NamedVertex.C));
-        System.out.println(graph.getEdgeWeight(NamedVertex.A, NamedVertex.D));
-        System.out.println(graph.getEdgeWeight(NamedVertex.A, NamedVertex.D) + graph.getEdgeWeight(NamedVertex.D, NamedVertex.C));
-        System.out.println(graph.getEdgeWeight(NamedVertex.A, NamedVertex.E) + graph.getEdgeWeight(NamedVertex.E, NamedVertex.B) + graph.getEdgeWeight(NamedVertex.B, NamedVertex.C) + graph.getEdgeWeight(NamedVertex.C, NamedVertex.D));
+        System.out.println(railwayService.getRouteLength(NamedVertex.A, NamedVertex.B, NamedVertex.C));
+        System.out.println(railwayService.getRouteLength(NamedVertex.A, NamedVertex.D));
+        System.out.println(railwayService.getRouteLength(NamedVertex.A, NamedVertex.D, NamedVertex.C));
+        System.out.println(railwayService.getRouteLength(NamedVertex.A, NamedVertex.E, NamedVertex.B, NamedVertex.C, NamedVertex.D));
         try {
-            System.out.println(graph.getEdgeWeight(NamedVertex.A, NamedVertex.E) + graph.getEdgeWeight(NamedVertex.E, NamedVertex.D));
+            System.out.println(railwayService.getRouteLength(NamedVertex.A, NamedVertex.E, NamedVertex.D));
         } catch (PathNotFoundException e) {
             System.out.println("NO SUCH ROUTE");
         }
@@ -55,14 +52,9 @@ public class MyClass {
 
 
         System.out.println("8-9 ----------------------");
-        System.out.println("8:" + graph.getShortestAcyclicPathLength(NamedVertex.A, NamedVertex.C));
+        System.out.println("8:" + railwayService.getShortestRouteBetweenStations(NamedVertex.A, NamedVertex.C));
 
-        double shortestLength = Integer.MAX_VALUE;
-        for (List<NamedVertex> cycle : graph.getCycles()) {
-            double cycleLength = graph.getCycleLength(cycle);
-            shortestLength = (cycleLength < shortestLength) ? cycleLength : shortestLength;
-        }
-        System.out.println("9:" + shortestLength);
+        System.out.println("9:" + railwayService.getShortestLoopLength());
 
 
 
