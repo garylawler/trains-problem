@@ -30,16 +30,7 @@ public class RailwayService {
         return distance;
     }
 
-    public double getShortestLoopLength() {
-        double shortestLength = Integer.MAX_VALUE;
-        for (List<NamedVertex> cycle : getCycles()) {
-            double cycleLength = getCycleLength(cycle);
-            shortestLength = (cycleLength < shortestLength) ? cycleLength : shortestLength;
-        }
-        return shortestLength;
-    }
-
-    public double getShortestRouteBetweenStations(NamedVertex startStation, NamedVertex endStation) {
+    public double getShortestAcyclicPathLength(NamedVertex startStation, NamedVertex endStation) {
         return railway.getShortestAcyclicPathLength(startStation, endStation);
     }
 
@@ -73,8 +64,23 @@ public class RailwayService {
 
     }
 
+    public List<NamedVertex> getCycleIncludingVertex(NamedVertex vertex) {
+        double cycleLength = Double.MAX_VALUE;
+        for(List<NamedVertex> nodeList : getCycles()) {
+            if(nodeList.contains(vertex)) {
+                double latestCycleLength = getCycleLength(nodeList);
+                cycleLength = latestCycleLength < cycleLength ? latestCycleLength : cycleLength;
+            }
+        }
+System.out.println(cycleLength);
+        return new ArrayList<>();
+    }
+
     public List<List<NamedVertex>> getCycles() {
         TarjanSimpleCycles<NamedVertex, DefaultWeightedEdge> simpleCycles = algorithmFactory.createTarjanSimpleCycles();
+
+        //getCycleIncludingVertex(NamedVertex.B);
+
         return simpleCycles.findSimpleCycles();
     }
 }

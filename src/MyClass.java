@@ -52,9 +52,11 @@ public class MyClass {
 
 
         System.out.println("8-9 ----------------------");
-        System.out.println("8:" + railwayService.getShortestRouteBetweenStations(NamedVertex.A, NamedVertex.C));
+        System.out.println("8:" + railwayService.getShortestAcyclicPathLength(NamedVertex.A, NamedVertex.C));
 
-        System.out.println("9:" + railwayService.getShortestLoopLength());
+        //System.out.println("9:" + railwayService.getShortestLoopLength());
+        System.out.println("9:" + railwayService.getCycles());
+        System.out.println("9(2):" + railwayService.getCycleIncludingVertex(NamedVertex.B));
 
 
 
