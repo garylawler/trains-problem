@@ -4,6 +4,7 @@ import com.model.Station;
 import com.facade.GraphFacade;
 import com.exception.PathNotFoundException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RailwayService {
@@ -36,7 +37,7 @@ public class RailwayService {
         return railwayGraph.getPathsWithExactNodes(startStation, endStation, numberOfStops);
     }
 
-    private double getCycleLength(List<Station> nodes) {
+    public double getCycleLength(List<Station> nodes) {
         int lengthOfCycle = 0;
         int numberOfNodes = nodes.size();
         if(numberOfNodes > 1) {
@@ -51,11 +52,44 @@ public class RailwayService {
     public double getShortestLoopLengthIncludingGivenStation(Station vertex) {
         double cycleLength = Double.MAX_VALUE;
         for(List<Station> nodeList : railwayGraph.getCycles()) {
-            if(nodeList.contains(vertex)) {
+            if (nodeList.contains(vertex)) {
                 double latestCycleLength = getCycleLength(nodeList);
                 cycleLength = latestCycleLength < cycleLength ? latestCycleLength : cycleLength;
             }
         }
         return cycleLength;
+    }
+
+    public double x() {
+//        class computedPath {
+//            public computedPath(double length, boolean )
+//        }
+
+        List<Double> pathLengthsUnderThirty = new ArrayList<>();
+        railwayGraph.getCycles().stream()
+                .filter(cycle -> cycle.contains(Station.C))
+                .forEach(cycle -> {
+                    Double cycleLength = getCycleLength(cycle);
+                    if (cycleLength < 30) {
+                        pathLengthsUnderThirty.add(cycleLength);
+                    }
+                });
+
+        for(int i = 0; i < pathLengthsUnderThirty.size(); i++) {
+            for(int j = 0; j< pathLengthsUnderThirty.size(); j++) {
+                double total = pathLengthsUnderThirty.get(i) + pathLengthsUnderThirty.get(j);
+
+                System.out.println(pathLengthsUnderThirty.get(i) + " + " + pathLengthsUnderThirty.get(j) + " = " + total);
+
+                if(total < 30 && // This clause fails if two distinct paths have the same length
+                        !(pathLengthsUnderThirty.get(i) != pathLengthsUnderThirty.get(j) &&
+                                pathLengthsUnderThirty.get(i) % pathLengthsUnderThirty.get(j) == 0)) {
+                    System.out.println("acceptable\n");
+                    pathLengthsUnderThirty.add(total);
+                }
+            }
+        }
+
+        return pathLengthsUnderThirty.size();
     }
 }

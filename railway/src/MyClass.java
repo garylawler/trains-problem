@@ -1,6 +1,6 @@
-import com.model.Station;
 import com.config.AppConfig;
 import com.exception.PathNotFoundException;
+import com.model.Station;
 import com.service.RailwayService;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -10,8 +10,6 @@ public class MyClass {
         AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(AppConfig.class);
 
         RailwayService railwayService = ctx.getBean(RailwayService.class);
-
-
 
         System.out.println("1-5 ----------------------");
         System.out.println("1:" + railwayService.getRouteLength(Station.A, Station.B, Station.C));
@@ -31,16 +29,16 @@ public class MyClass {
         System.out.println("8-9 ----------------------");
         System.out.println("8:" + railwayService.getShortestNonLoopingRouteLength(Station.A, Station.C));
         System.out.println("9:" + railwayService.getShortestLoopLengthIncludingGivenStation(Station.B));
+        System.out.println("9:" + railwayService.getShortestLoopLengthIncludingGivenStation(Station.C));
 
-//
-//        System.out.println("10 ------------------------");
-//
-//        for(List<com.model.Station> cycle : graph.getCycles()) {
-//            graph.getCycleLength(cycle);
-//        }
-//
-//        System.out.println("-------------------------");
-//        System.out.print("");
-    }
+
+        System.out.println("10 ------------------------");
+
+
+        System.out.println(railwayService.x());
+
+
+        System.out.println("-------------------------");
+        System.out.print("");    }
 
 }
