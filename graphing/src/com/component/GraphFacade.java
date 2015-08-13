@@ -13,9 +13,9 @@ import java.util.List;
 
 public class GraphFacade<V> {
     private SimpleDirectedWeightedGraph<V, DefaultWeightedEdge> directedGraph;
-    private AlgorithmFactory algorithmFactory;
+    private AlgorithmFactory<V> algorithmFactory;
 
-    public GraphFacade(SimpleDirectedWeightedGraph<V, DefaultWeightedEdge> directedGraph, AlgorithmFactory algorithmFactory) {
+    public GraphFacade(SimpleDirectedWeightedGraph<V, DefaultWeightedEdge> directedGraph, AlgorithmFactory<V> algorithmFactory) {
         this.directedGraph = directedGraph;
         this.algorithmFactory = algorithmFactory;
     }

@@ -11,7 +11,7 @@ abstract class ModifiedDepthFirstTraversalTemplate<V, E> {
     private V endVertex;
     private DirectedGraph<V,E> directedGraph;
 
-    public ModifiedDepthFirstTraversalTemplate(DirectedGraph directedGraph, V startDepth, V endVertex, int maxDepth) {
+    public ModifiedDepthFirstTraversalTemplate(DirectedGraph<V, E> directedGraph, V startDepth, V endVertex, int maxDepth) {
         this.startDepth = startDepth;
         this.endVertex = endVertex;
         this.maxDepth = maxDepth;

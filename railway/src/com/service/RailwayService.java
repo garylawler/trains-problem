@@ -37,7 +37,7 @@ public class RailwayService {
         return railway.getPathsWithExactNodes(startStation, endStation, numberOfStops);
     }
 
-    public List<Station> getCycleContainingNode(String node) {
+    public List<Station> getCycleContainingNode(Station node) {
         for(List<Station> nodeList : railway.getCycles()) {
             if(nodeList.contains(node)) {
                 return nodeList;

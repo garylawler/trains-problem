@@ -27,8 +27,7 @@ public class AppConfig {
 
     @Bean
     SimpleDirectedWeightedGraph<Station, DefaultWeightedEdge> getSimpleDirectedWeightedGraph() {
-        SimpleDirectedWeightedGraph<Station, DefaultWeightedEdge> directedGraph = new SimpleDirectedWeightedGraph<>(DefaultWeightedEdge.class);
-        return directedGraph;
+        return new SimpleDirectedWeightedGraph<>(DefaultWeightedEdge.class);
     }
 
     @Bean
