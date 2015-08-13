@@ -2,7 +2,6 @@ package com.factory;
 
 import com.algorithm.CountPathsWithAtLeastAGivenNumberOfStops;
 import com.algorithm.CountPathsWithNumberOfStops;
-import com.component.NamedVertex;
 import org.jgrapht.alg.DijkstraShortestPath;
 import org.jgrapht.alg.cycle.TarjanSimpleCycles;
 import org.jgrapht.graph.DefaultWeightedEdge;
@@ -18,20 +17,22 @@ import static org.hamcrest.MatcherAssert.assertThat;
 @RunWith(MockitoJUnitRunner.class)
 public class AlgorithmFactoryTest {
 
+    private static final String A = "A";
+    private static final String B = "B";
     private AlgorithmFactory algorithmFactory;
-    private SimpleDirectedWeightedGraph<NamedVertex, DefaultWeightedEdge> graph;
+    private SimpleDirectedWeightedGraph<String, DefaultWeightedEdge> graph;
 
     @Before
     public void onSetUp() {
         graph = new SimpleDirectedWeightedGraph<>(DefaultWeightedEdge.class);
-        graph.addVertex(NamedVertex.A);
-        graph.addVertex(NamedVertex.B);
-        algorithmFactory = new AlgorithmFactory(graph);
+        graph.addVertex(A);
+        graph.addVertex(B);
+        algorithmFactory = new AlgorithmFactory<>(graph);
     }
 
     @Test
     public void createDijkstraShortestPath() {
-        assertThat(algorithmFactory.createDijkstraShortestPath(NamedVertex.A, NamedVertex.B), isA(DijkstraShortestPath.class));
+        assertThat(algorithmFactory.createDijkstraShortestPath(A, B), isA(DijkstraShortestPath.class));
     }
 
     @Test
@@ -41,11 +42,11 @@ public class AlgorithmFactoryTest {
 
     @Test
     public void createDepthFirstPathCounterExactStops() {
-        assertThat(algorithmFactory.createCountPathsWithNumberOfStops(NamedVertex.A, NamedVertex.B, 5), isA(CountPathsWithNumberOfStops.class));
+        assertThat(algorithmFactory.createCountPathsWithNumberOfStops(A, B, 5), isA(CountPathsWithNumberOfStops.class));
     }
 
     @Test
     public void createDepthFirstPathCounterMaximumStops() {
-        assertThat(algorithmFactory.createCountPathsWithAtLeastAGivenNumberOfStops(NamedVertex.A, NamedVertex.B, 5), isA(CountPathsWithAtLeastAGivenNumberOfStops.class));
+        assertThat(algorithmFactory.createCountPathsWithAtLeastAGivenNumberOfStops(A, B, 5), isA(CountPathsWithAtLeastAGivenNumberOfStops.class));
     }
 }

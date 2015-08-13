@@ -1,25 +1,20 @@
 package com.service;
 
+import com.Station;
 import com.component.GraphFacade;
-import com.component.NamedVertex;
 import com.exception.PathNotFoundException;
-import com.factory.AlgorithmFactory;
-import org.jgrapht.alg.cycle.TarjanSimpleCycles;
-import org.jgrapht.graph.DefaultWeightedEdge;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class RailwayService {
-    private GraphFacade railway;
-    private AlgorithmFactory algorithmFactory;
+    private GraphFacade<Station> railway;
 
-    public RailwayService(GraphFacade graphFacade, AlgorithmFactory algorithmFactory) {
+    public RailwayService(GraphFacade graphFacade) {
         this.railway = graphFacade;
-        this.algorithmFactory = algorithmFactory;
     }
 
-    public double getRouteLength(NamedVertex... stations) throws PathNotFoundException {
+    public double getRouteLength(Station... stations) throws PathNotFoundException {
         double distance = 0;
         int numberOfNodes = stations.length;
         if(numberOfNodes > 1) {
@@ -30,20 +25,20 @@ public class RailwayService {
         return distance;
     }
 
-    public double getShortestAcyclicPathLength(NamedVertex startStation, NamedVertex endStation) {
+    public double getPathLengthWithoutLoops(Station startStation, Station endStation) {
         return railway.getShortestAcyclicPathLength(startStation, endStation);
     }
 
-    public double getPathsWithStops(NamedVertex startStation, NamedVertex endStation, int numberOfStops ) {
+    public double getPathsWithStops(Station startStation, Station endStation, int numberOfStops ) {
         return railway.getPathsWithStops(startStation, endStation, numberOfStops);
     }
 
-    public double getPathsWithExactNodes(NamedVertex startStation, NamedVertex endStation, int numberOfStops ) {
+    public double getPathsWithExactNodes(Station startStation, Station endStation, int numberOfStops ) {
         return railway.getPathsWithExactNodes(startStation, endStation, numberOfStops);
     }
 
-    public List<NamedVertex> getCycleContainingNode(String node) {
-        for(List<NamedVertex> nodeList : getCycles()) {
+    public List<Station> getCycleContainingNode(String node) {
+        for(List<Station> nodeList : railway.getCycles()) {
             if(nodeList.contains(node)) {
                 return nodeList;
             }
@@ -51,7 +46,7 @@ public class RailwayService {
         return new ArrayList<>();
     }
 
-    public double getCycleLength(List<NamedVertex> nodes) {
+    public double getCycleLength(List<Station> nodes) {
         int lengthOfCycle = 0;
         int numberOfNodes = nodes.size();
         if(numberOfNodes > 1) {
@@ -64,23 +59,14 @@ public class RailwayService {
 
     }
 
-    public List<NamedVertex> getCycleIncludingVertex(NamedVertex vertex) {
+    public double getShortestLoopLengthIncludingGivenStation(Station vertex) {
         double cycleLength = Double.MAX_VALUE;
-        for(List<NamedVertex> nodeList : getCycles()) {
+        for(List<Station> nodeList : railway.getCycles()) {
             if(nodeList.contains(vertex)) {
                 double latestCycleLength = getCycleLength(nodeList);
                 cycleLength = latestCycleLength < cycleLength ? latestCycleLength : cycleLength;
             }
         }
-System.out.println(cycleLength);
-        return new ArrayList<>();
-    }
-
-    public List<List<NamedVertex>> getCycles() {
-        TarjanSimpleCycles<NamedVertex, DefaultWeightedEdge> simpleCycles = algorithmFactory.createTarjanSimpleCycles();
-
-        //getCycleIncludingVertex(NamedVertex.B);
-
-        return simpleCycles.findSimpleCycles();
+        return cycleLength;
     }
 }
