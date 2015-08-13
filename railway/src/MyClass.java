@@ -1,4 +1,4 @@
-import com.Station;
+import com.model.Station;
 import com.config.AppConfig;
 import com.exception.PathNotFoundException;
 import com.service.RailwayService;
@@ -35,7 +35,7 @@ public class MyClass {
 //
 //        System.out.println("10 ------------------------");
 //
-//        for(List<com.Station> cycle : graph.getCycles()) {
+//        for(List<com.model.Station> cycle : graph.getCycles()) {
 //            graph.getCycleLength(cycle);
 //        }
 //

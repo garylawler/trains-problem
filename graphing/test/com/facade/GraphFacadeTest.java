@@ -2,6 +2,8 @@ package com.facade;
 
 import com.algorithm.CountPathsWithAtLeastAGivenNumberOfStops;
 import com.algorithm.CountPathsWithNumberOfStops;
+import com.algorithm.CycleCountAlgorithm;
+import com.algorithm.ShortestPathAlgorithm;
 import com.exception.PathNotFoundException;
 import com.factory.AlgorithmFactory;
 import org.jgrapht.alg.DijkstraShortestPath;
@@ -34,21 +36,19 @@ public class GraphFacadeTest {
     private @Mock SimpleDirectedWeightedGraph<String, DefaultWeightedEdge> simpleDirectedWeightedGraph;
     private @Mock AlgorithmFactory<String> algorithmFactory;
     private @Mock DefaultWeightedEdge defaultWeightedEdge;
-    private DijkstraShortestPath dijkstraShortestPath;
-    private TarjanSimpleCycles tarjanSimpleCycles;
+    private @Mock ShortestPathAlgorithm<String> shortestPath;
+    private @Mock CycleCountAlgorithm<String> cycleCount;
     private CountPathsWithAtLeastAGivenNumberOfStops maximumStops;
     private CountPathsWithNumberOfStops exactStops;
 
     @Before
     public void onSetUp() {
-        dijkstraShortestPath = PowerMockito.mock(DijkstraShortestPath.class);
-        tarjanSimpleCycles = PowerMockito.mock(TarjanSimpleCycles.class);
         maximumStops = PowerMockito.mock(CountPathsWithAtLeastAGivenNumberOfStops.class);
         exactStops = PowerMockito.mock(CountPathsWithNumberOfStops.class);
 
         graphFacade = new GraphFacade<>(simpleDirectedWeightedGraph, algorithmFactory);
-        when(algorithmFactory.createDijkstraShortestPath(anyString(), anyString())).thenReturn(dijkstraShortestPath);
-        when(algorithmFactory.createTarjanSimpleCycles()).thenReturn(tarjanSimpleCycles);
+        when(algorithmFactory.createShortestPathAlgorithm(anyString(), anyString())).thenReturn(shortestPath);
+        when(algorithmFactory.createCycleCountAlgorithm()).thenReturn(cycleCount);
         when(algorithmFactory.createCountPathsWithAtLeastAGivenNumberOfStops(anyString(), anyString(), anyInt())).thenReturn(maximumStops);
         when(algorithmFactory.createCountPathsWithNumberOfStops(anyString(), anyString(), anyInt())).thenReturn(exactStops);
     }
@@ -92,9 +92,9 @@ public class GraphFacadeTest {
     @Test
     public void getShortestAcyclicPathLength() {
         double expectedLength = 3d;
-        when(dijkstraShortestPath.getPathLength()).thenReturn(expectedLength);
+        when(shortestPath.getShortestPathLength()).thenReturn(expectedLength);
         assertThat(graphFacade.getShortestAcyclicPathLength(A, B), is(expectedLength));
-        verify(algorithmFactory, times(1)).createDijkstraShortestPath(A, B);
+        verify(algorithmFactory, times(1)).createShortestPathAlgorithm(A, B);
     }
 
     @Test
@@ -115,9 +115,9 @@ public class GraphFacadeTest {
 
     @Test
     public void getCycles() {
-        List<String> expected = new ArrayList<>();
-        when(tarjanSimpleCycles.findSimpleCycles()).thenReturn(expected);
+        List<List<String>> expected = new ArrayList<>();
+        when(cycleCount.getCycles()).thenReturn(expected);
         assertThat(graphFacade.getCycles(), is(expected));
-        verify(algorithmFactory, times(1)).createTarjanSimpleCycles();
+        verify(algorithmFactory, times(1)).createCycleCountAlgorithm();
     }
 }

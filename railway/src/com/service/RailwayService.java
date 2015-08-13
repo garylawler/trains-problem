@@ -1,6 +1,6 @@
 package com.service;
 
-import com.Station;
+import com.model.Station;
 import com.facade.GraphFacade;
 import com.exception.PathNotFoundException;
 

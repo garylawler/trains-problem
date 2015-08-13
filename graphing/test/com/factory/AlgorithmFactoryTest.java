@@ -2,8 +2,8 @@ package com.factory;
 
 import com.algorithm.CountPathsWithAtLeastAGivenNumberOfStops;
 import com.algorithm.CountPathsWithNumberOfStops;
-import org.jgrapht.alg.DijkstraShortestPath;
-import org.jgrapht.alg.cycle.TarjanSimpleCycles;
+import com.algorithm.CycleCountAlgorithm;
+import com.algorithm.ShortestPathAlgorithm;
 import org.jgrapht.graph.DefaultWeightedEdge;
 import org.jgrapht.graph.SimpleDirectedWeightedGraph;
 import org.junit.Before;
@@ -30,13 +30,13 @@ public class AlgorithmFactoryTest {
     }
 
     @Test
-    public void createDijkstraShortestPath() {
-        assertThat(algorithmFactory.createDijkstraShortestPath(A, B), isA(DijkstraShortestPath.class));
+    public void createShortestPathAlgorithm() {
+        assertThat(algorithmFactory.createShortestPathAlgorithm(A, B), isA(ShortestPathAlgorithm.class));
     }
 
     @Test
-    public void createTarjanSimpleCycles() {
-        assertThat(algorithmFactory.createTarjanSimpleCycles(), isA(TarjanSimpleCycles.class));
+    public void createCycleCountAlgorithm() {
+        assertThat(algorithmFactory.createCycleCountAlgorithm(), isA(CycleCountAlgorithm.class));
     }
 
     @Test

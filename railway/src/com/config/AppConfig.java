@@ -1,6 +1,6 @@
 package com.config;
 
-import com.Station;
+import com.model.Station;
 import com.facade.GraphFacade;
 import com.factory.AlgorithmFactory;
 import com.service.RailwayService;

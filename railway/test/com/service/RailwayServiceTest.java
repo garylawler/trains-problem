@@ -1,6 +1,6 @@
 package com.service;
 
-import com.Station;
+import com.model.Station;
 import com.exception.PathNotFoundException;
 import com.facade.GraphFacade;
 import org.junit.Before;
@@ -44,9 +44,9 @@ public class RailwayServiceTest {
     }
 
     @Test
-    public void getPathLengthWithoutLoops() {
+    public void getShortestNonLoopingRouteLength() {
         when(graphFacade.getShortestAcyclicPathLength(Station.A, Station.B)).thenReturn(4d);
-        assertThat(railwayService.getPathLengthWithoutLoops(Station.A, Station.B), is(4d));
+        assertThat(railwayService.getShortestNonLoopingRouteLength(Station.A, Station.B), is(4d));
     }
 
     public void getPathsWithStops() {
@@ -54,9 +54,9 @@ public class RailwayServiceTest {
         assertThat(railwayService.getPathsWithStops(Station.A, Station.B, 5), is(4d));
     }
 
-    public double getPathsWithExactNodes() {
+    public double getNumberOfRoutesWithExactNumberOfStops() {
         when(graphFacade.getPathsWithExactNodes(Station.A, Station.B, 5)).thenReturn(4d);
-        return railwayService.getPathsWithExactNodes(Station.A, Station.B, 5);
+        return railwayService.getNumberOfRoutesWithExactNumberOfStops(Station.A, Station.B, 5);
     }
 //
 //    public double getShortestLoopLengthIncludingGivenStation(Station vertex) {

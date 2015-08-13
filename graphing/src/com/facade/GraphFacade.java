@@ -2,10 +2,10 @@ package com.facade;
 
 import com.algorithm.CountPathsWithAtLeastAGivenNumberOfStops;
 import com.algorithm.CountPathsWithNumberOfStops;
+import com.algorithm.CycleCountAlgorithm;
+import com.algorithm.ShortestPathAlgorithm;
 import com.exception.PathNotFoundException;
 import com.factory.AlgorithmFactory;
-import org.jgrapht.alg.DijkstraShortestPath;
-import org.jgrapht.alg.cycle.TarjanSimpleCycles;
 import org.jgrapht.graph.DefaultWeightedEdge;
 import org.jgrapht.graph.SimpleDirectedWeightedGraph;
 
@@ -35,8 +35,8 @@ public class GraphFacade<V> {
     }
 
     public double getShortestAcyclicPathLength(V startNode, V endNode) {
-        DijkstraShortestPath<V, DefaultWeightedEdge> dijkstraShortestPath = algorithmFactory.createDijkstraShortestPath(startNode, endNode);
-        return dijkstraShortestPath.getPathLength();
+        ShortestPathAlgorithm<V> shortestPathAlgorithm = algorithmFactory.createShortestPathAlgorithm(startNode, endNode);
+        return shortestPathAlgorithm.getShortestPathLength();
     }
 
     public double getPathsWithStops(V startNode, V endNode, int numberOfStops ) {
@@ -52,8 +52,8 @@ public class GraphFacade<V> {
     }
 
     public List<List<V>> getCycles() {
-        TarjanSimpleCycles<V, DefaultWeightedEdge> simpleCycles = algorithmFactory.createTarjanSimpleCycles();
-        return simpleCycles.findSimpleCycles();
+        CycleCountAlgorithm<V> simpleCycles = algorithmFactory.createCycleCountAlgorithm();
+        return simpleCycles.getCycles();
     }
 
     private void addVertex(V vertex) {
