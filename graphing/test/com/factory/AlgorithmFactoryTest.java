@@ -19,12 +19,11 @@ public class AlgorithmFactoryTest {
 
     private static final String A = "A";
     private static final String B = "B";
-    private AlgorithmFactory algorithmFactory;
-    private SimpleDirectedWeightedGraph<String, DefaultWeightedEdge> graph;
+    private AlgorithmFactory<String> algorithmFactory;
 
     @Before
     public void onSetUp() {
-        graph = new SimpleDirectedWeightedGraph<>(DefaultWeightedEdge.class);
+        SimpleDirectedWeightedGraph<String, DefaultWeightedEdge> graph = new SimpleDirectedWeightedGraph<>(DefaultWeightedEdge.class);
         graph.addVertex(A);
         graph.addVertex(B);
         algorithmFactory = new AlgorithmFactory<>(graph);

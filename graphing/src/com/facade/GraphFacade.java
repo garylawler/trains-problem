@@ -1,4 +1,4 @@
-package com.component;
+package com.facade;
 
 import com.algorithm.CountPathsWithAtLeastAGivenNumberOfStops;
 import com.algorithm.CountPathsWithNumberOfStops;

@@ -1,7 +1,7 @@
 package com.config;
 
 import com.Station;
-import com.component.GraphFacade;
+import com.facade.GraphFacade;
 import com.factory.AlgorithmFactory;
 import com.service.RailwayService;
 import org.jgrapht.graph.DefaultWeightedEdge;
@@ -9,6 +9,8 @@ import org.jgrapht.graph.SimpleDirectedWeightedGraph;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.io.IOException;
 
 @Configuration
 public class AppConfig {
@@ -21,8 +23,18 @@ public class AppConfig {
 
     @Bean
     @Autowired
-    GraphFacade<Station> getGraphFacade(SimpleDirectedWeightedGraph<Station, DefaultWeightedEdge> graph, AlgorithmFactory algorithmFactory) {
-        return new GraphFacade<>(graph, algorithmFactory);
+    GraphFacade<Station> getGraphFacade(SimpleDirectedWeightedGraph<Station, DefaultWeightedEdge> graph, AlgorithmFactory<Station> algorithmFactory) throws IOException {
+        GraphFacade<Station> railwayGraph = new GraphFacade<>(graph, algorithmFactory);
+        railwayGraph.addEdge(Station.A, Station.B, 5);
+        railwayGraph.addEdge(Station.B, Station.C, 4);
+        railwayGraph.addEdge(Station.C, Station.D, 8);
+        railwayGraph.addEdge(Station.D, Station.C, 8);
+        railwayGraph.addEdge(Station.D, Station.E, 6);
+        railwayGraph.addEdge(Station.A, Station.D, 5);
+        railwayGraph.addEdge(Station.C, Station.E, 2);
+        railwayGraph.addEdge(Station.E, Station.B, 3);
+        railwayGraph.addEdge(Station.A, Station.E, 7);
+        return railwayGraph;
     }
 
     @Bean

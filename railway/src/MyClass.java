@@ -1,5 +1,4 @@
 import com.Station;
-import com.component.GraphFacade;
 import com.config.AppConfig;
 import com.exception.PathNotFoundException;
 import com.service.RailwayService;
@@ -10,18 +9,9 @@ public class MyClass {
     public static void main(String[] args) {
         AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(AppConfig.class);
 
-        GraphFacade graph = ctx.getBean(GraphFacade.class);
         RailwayService railwayService = ctx.getBean(RailwayService.class);
 
-        graph.addEdge(Station.A, Station.B, 5);
-        graph.addEdge(Station.B, Station.C, 4);
-        graph.addEdge(Station.C, Station.D, 8);
-        graph.addEdge(Station.D, Station.C, 8);
-        graph.addEdge(Station.D, Station.E, 6);
-        graph.addEdge(Station.A, Station.D, 5);
-        graph.addEdge(Station.C, Station.E, 2);
-        graph.addEdge(Station.E, Station.B, 3);
-        graph.addEdge(Station.A, Station.E, 7);
+
 
         System.out.println("1-5 ----------------------");
         System.out.println("1:" + railwayService.getRouteLength(Station.A, Station.B, Station.C));
@@ -36,10 +26,10 @@ public class MyClass {
 
         System.out.println("6-7 -------------------------");
         System.out.println("6:" + railwayService.getPathsWithStops(Station.C, Station.C, 3));
-        System.out.println("7:" + railwayService.getPathsWithExactNodes(Station.A, Station.C, 4));
+        System.out.println("7:" + railwayService.getNumberOfRoutesWithExactNumberOfStops(Station.A, Station.C, 4));
 
         System.out.println("8-9 ----------------------");
-        System.out.println("8:" + railwayService.getPathLengthWithoutLoops(Station.A, Station.C));
+        System.out.println("8:" + railwayService.getShortestNonLoopingRouteLength(Station.A, Station.C));
         System.out.println("9:" + railwayService.getShortestLoopLengthIncludingGivenStation(Station.B));
 
 //
