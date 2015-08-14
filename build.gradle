@@ -2,14 +2,20 @@ version '0.1'
 
 apply plugin: 'application'
 
+def appName = 'trains-problem'
+
 mainClassName = 'TrainsProblem'
 
 jar {
-    baseName = 'trains-problem'
+    baseName = appName
 }
 
 distZip {
-    baseName = 'trains-problem'
+    baseName = appName
+}
+
+startScripts {
+    applicationName = appName
 }
 
 dependencies {

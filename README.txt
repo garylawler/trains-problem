@@ -5,3 +5,4 @@ TO RUN:
 Extract contents of zip file.
 Open a command prompt/terminal window and navigate to location of exploded zip file.
 
+run bin/trains-problem.bat (windows) or bin/trains-problem (linux)
