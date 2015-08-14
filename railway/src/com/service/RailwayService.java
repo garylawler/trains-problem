@@ -15,26 +15,14 @@ public class RailwayService {
     }
 
     public double getRouteLength(Station... stations) throws PathNotFoundException {
-        double distance = 0;
+        double totalDistance = 0;
         int numberOfStations = stations.length;
         if(numberOfStations > 1) {
             for(int i=1; i< numberOfStations; i++) {
-                distance += railwayGraph.getEdgeWeight(stations[i - 1], stations[i]);
+                totalDistance += railwayGraph.getEdgeWeight(stations[i - 1], stations[i]);
             }
         }
-        return distance;
-    }
-
-    public double getShortestNonLoopingRouteLength(Station startStation, Station endStation) {
-        return railwayGraph.getShortestAcyclicPathLength(startStation, endStation);
-    }
-
-    public double getRoutesWithStops(Station startStation, Station endStation, int numberOfStops) {
-        return railwayGraph.getPathsWithStops(startStation, endStation, numberOfStops);
-    }
-
-    public double getNumberOfRoutesWithExactNumberOfStops(Station startStation, Station endStation, int numberOfStops ) {
-        return railwayGraph.getPathsWithExactNodes(startStation, endStation, numberOfStops);
+        return totalDistance;
     }
 
     private double getCycleLength(List<Station> stations) {
@@ -49,40 +37,52 @@ public class RailwayService {
         return lengthOfCycle;
     }
 
-    public double getShortestLoopLengthIncludingGivenStation(Station vertex) {
-        double cycleLength = Double.MAX_VALUE;
-        for(List<Station> nodeList : railwayGraph.getCycles()) {
-            if (nodeList.contains(vertex)) {
-                double latestCycleLength = getCycleLength(nodeList);
-                cycleLength = latestCycleLength < cycleLength ? latestCycleLength : cycleLength;
-            }
-        }
-        return cycleLength;
+    public double getShortestNonLoopingRouteLength(Station startStation, Station endStation) {
+        return railwayGraph.getShortestAcyclicPathLength(startStation, endStation);
     }
 
-    public double x() {
+    public double getNumberOfRoutesWithStops(Station startStation, Station endStation, int numberOfStops) {
+        return railwayGraph.countPathsWithStops(startStation, endStation, numberOfStops);
+    }
 
-        List<Double> pathLengthsUnderThirty = new ArrayList<>();
+    public double getNumberOfRoutesWithExactNumberOfStops(Station startStation, Station endStation, int numberOfStops ) {
+        return railwayGraph.countPathsWithExactNodes(startStation, endStation, numberOfStops);
+    }
+
+    public double getShortestLoopLengthIncludingGivenStation(Station vertex) {
+        double currentShortestCycleLength = Double.MAX_VALUE;
+        for(List<Station> stationList : railwayGraph.getCycles()) {
+            if (stationList.contains(vertex)) {
+                double latestCycleLength = getCycleLength(stationList);
+                currentShortestCycleLength = latestCycleLength < currentShortestCycleLength ? latestCycleLength : currentShortestCycleLength;
+            }
+        }
+        return currentShortestCycleLength;
+    }
+
+    public double getNumberOfRoutesWithDistanceLessThanThirty() {
+
+        List<Double> cycleLengthsUnderThirty = new ArrayList<>();
         railwayGraph.getCycles().stream()
                 .filter(cycle -> cycle.contains(Station.C))
                 .forEach(cycle -> {
                     Double cycleLength = getCycleLength(cycle);
                     if (cycleLength < 30) {
-                        pathLengthsUnderThirty.add(cycleLength);
+                        cycleLengthsUnderThirty.add(cycleLength);
                     }
                 });
 
-        for(int i = 0; i < pathLengthsUnderThirty.size(); i++) {
-            for(int j = 0; j< pathLengthsUnderThirty.size(); j++) {
-                double total = pathLengthsUnderThirty.get(i) + pathLengthsUnderThirty.get(j);
+        for(int i = 0; i < cycleLengthsUnderThirty.size(); i++) {
+            for(int j = 0; j< cycleLengthsUnderThirty.size(); j++) {
+                double total = cycleLengthsUnderThirty.get(i) + cycleLengthsUnderThirty.get(j);
                 if(total < 30 &&
-                        !(pathLengthsUnderThirty.get(i) != pathLengthsUnderThirty.get(j) &&
-                                pathLengthsUnderThirty.get(i) % pathLengthsUnderThirty.get(j) == 0)) {
-                    pathLengthsUnderThirty.add(total);
+                        !(cycleLengthsUnderThirty.get(i) != cycleLengthsUnderThirty.get(j) &&
+                                cycleLengthsUnderThirty.get(i) % cycleLengthsUnderThirty.get(j) == 0)) {
+                    cycleLengthsUnderThirty.add(total);
                 }
             }
         }
 
-        return pathLengthsUnderThirty.size();
+        return cycleLengthsUnderThirty.size();
     }
 }

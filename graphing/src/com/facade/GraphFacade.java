@@ -39,12 +39,12 @@ public class GraphFacade<V> {
         return shortestPath.getShortestPathLength();
     }
 
-    public double getPathsWithStops(V startNode, V endNode, int numberOfStops ) {
+    public double countPathsWithStops(V startNode, V endNode, int numberOfStops) {
         CountPathsWithAtLeastAGivenNumberOfStops<V, DefaultWeightedEdge> depthFirstPathCounter2 = algorithmFactory.createCountPathsWithAtLeastAGivenNumberOfStops(startNode, endNode, numberOfStops);
         return depthFirstPathCounter2.getNoOfRoutes();
     }
 
-    public double getPathsWithExactNodes(V startNode, V endNode, int numberOfStops ) {
+    public double countPathsWithExactNodes(V startNode, V endNode, int numberOfStops) {
         CountPathsWithNumberOfStops<V, DefaultWeightedEdge> depthFirstPathCounter = algorithmFactory.createCountPathsWithNumberOfStops(startNode, endNode, numberOfStops);
         return depthFirstPathCounter.getNoOfRoutesAtTargetDepth();
     }

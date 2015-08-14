@@ -12,7 +12,7 @@ import static org.hamcrest.core.Is.is;
 public class AppConfigTest {
 
     @Test
-    public void verifySpringConfigISCorrect() {
+    public void verifySpringConfigIsCorrect() {
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
         assertThat(context.isActive(), is(true));
     }

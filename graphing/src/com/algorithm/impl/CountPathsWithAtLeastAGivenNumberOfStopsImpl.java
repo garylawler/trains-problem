@@ -7,8 +7,8 @@ public final class CountPathsWithAtLeastAGivenNumberOfStopsImpl<V, E> extends Mo
 
     private double noOfRoutes = 0;
 
-    public CountPathsWithAtLeastAGivenNumberOfStopsImpl(DirectedGraph directedGraph, V startVertex, V endVertex, int maxDepth) {
-        super(directedGraph, startVertex, endVertex, maxDepth);
+    public CountPathsWithAtLeastAGivenNumberOfStopsImpl(DirectedGraph<V, E> directedGraph, V startVertex, V endVertex, int maxDepth) {
+        super(directedGraph, endVertex);
         traverseInternal(startVertex, maxDepth);
     }
 

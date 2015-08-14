@@ -103,7 +103,7 @@ public class GraphFacadeTest {
     public void getPathsWithStops() {
         double expectedNumberOfStops = 5;
         when(maximumStops.getNoOfRoutes()).thenReturn(expectedNumberOfStops);
-        assertThat(graphFacade.getPathsWithStops(A, B, 5), is(expectedNumberOfStops));
+        assertThat(graphFacade.countPathsWithStops(A, B, 5), is(expectedNumberOfStops));
         verify(algorithmFactory, times(1)).createCountPathsWithAtLeastAGivenNumberOfStops(A, B, 5);
     }
 
@@ -111,7 +111,7 @@ public class GraphFacadeTest {
     public void getPathsWithExactNodes() {
         double expectedNumberOfStops = 5;
         when(exactStops.getNoOfRoutesAtTargetDepth()).thenReturn(expectedNumberOfStops);
-        assertThat(graphFacade.getPathsWithExactNodes(A, B, 5), is(expectedNumberOfStops));
+        assertThat(graphFacade.countPathsWithExactNodes(A, B, 5), is(expectedNumberOfStops));
         verify(algorithmFactory, times(1)).createCountPathsWithNumberOfStops(A, B, 5);
     }
 

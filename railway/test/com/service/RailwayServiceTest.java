@@ -55,13 +55,13 @@ public class RailwayServiceTest {
 
     @Test
     public void getPathsWithStops() {
-        when(graphFacade.getPathsWithStops(Station.A, Station.B, 5)).thenReturn(4d);
-        assertThat(railwayService.getRoutesWithStops(Station.A, Station.B, 5), is(4d));
+        when(graphFacade.countPathsWithStops(Station.A, Station.B, 5)).thenReturn(4d);
+        assertThat(railwayService.getNumberOfRoutesWithStops(Station.A, Station.B, 5), is(4d));
     }
 
     @Test
     public void getNumberOfRoutesWithExactNumberOfStops() {
-        when(graphFacade.getPathsWithExactNodes(Station.A, Station.B, 5)).thenReturn(2d);
+        when(graphFacade.countPathsWithExactNodes(Station.A, Station.B, 5)).thenReturn(2d);
         assertThat(railwayService.getNumberOfRoutesWithExactNumberOfStops(Station.A, Station.B, 5), is(2d));
     }
 
@@ -73,6 +73,6 @@ public class RailwayServiceTest {
 
         // One loop a->b->c has a cost of 12. Therefore there are two valid loops with a cost less than 30:
         // a->b->c and a->b->c->a->b->c
-        assertThat(railwayService.x(), is(2d));
+        assertThat(railwayService.getNumberOfRoutesWithDistanceLessThanThirty(), is(2d));
     }
 }

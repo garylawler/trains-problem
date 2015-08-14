@@ -6,25 +6,21 @@ import java.util.Set;
 
 abstract class ModifiedDepthFirstTraversalTemplate<V, E> {
 
-    private int maxDepth = 0;
-    private V startVertex;
     private V endVertex;
     private DirectedGraph<V,E> directedGraph;
 
-    public ModifiedDepthFirstTraversalTemplate(DirectedGraph<V, E> directedGraph, V startVertex, V endVertex, int maxDepth) {
-        this.startVertex = startVertex;
+    public ModifiedDepthFirstTraversalTemplate(DirectedGraph<V, E> directedGraph, V endVertex) {
         this.endVertex = endVertex;
-        this.maxDepth = maxDepth;
         this.directedGraph = directedGraph;
     }
 
-    protected boolean traverseInternal(V v, int depth){
-        if(v == endVertex) {
+    protected boolean traverseInternal(V originVertex, int depth){
+        if(originVertex == endVertex) {
             onEndVertexEncountered(depth);
         }
 
         if (depth > 0) {
-            Set<E> outboundEdges = directedGraph.outgoingEdgesOf(v);
+            Set<E> outboundEdges = directedGraph.outgoingEdgesOf(originVertex);
             for(E edge : outboundEdges) {
                 V targetVertex = directedGraph.getEdgeTarget(edge);
                 if(traverseInternal(targetVertex, depth - 1)) {

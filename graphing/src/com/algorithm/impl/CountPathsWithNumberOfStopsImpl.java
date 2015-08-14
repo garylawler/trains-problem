@@ -7,8 +7,8 @@ public final class CountPathsWithNumberOfStopsImpl<V, E> extends ModifiedDepthFi
 
     private double noOfRoutesAtTargetDepth = 0;
 
-    public CountPathsWithNumberOfStopsImpl(DirectedGraph directedGraph, V startVertex, V endVertex, int maxDepth) {
-        super(directedGraph, startVertex, endVertex, maxDepth);
+    public CountPathsWithNumberOfStopsImpl(DirectedGraph<V, E> directedGraph, V startVertex, V endVertex, int maxDepth) {
+        super(directedGraph, endVertex);
         traverseInternal(startVertex, maxDepth);
     }
 

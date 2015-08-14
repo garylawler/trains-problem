@@ -27,7 +27,7 @@ public class MyClass {
         }
 
         System.out.println("6-7 -------------------------");
-        System.out.println("6:" + railwayService.getRoutesWithStops(Station.C, Station.C, 3));
+        System.out.println("6:" + railwayService.getNumberOfRoutesWithStops(Station.C, Station.C, 3));
         System.out.println("7:" + railwayService.getNumberOfRoutesWithExactNumberOfStops(Station.A, Station.C, 4));
 
         System.out.println("8-9 ----------------------");
@@ -35,7 +35,7 @@ public class MyClass {
         System.out.println("9:" + railwayService.getShortestLoopLengthIncludingGivenStation(Station.B));
 
         System.out.println("10 ------------------------");
-        System.out.println(railwayService.x());
+        System.out.println(railwayService.getNumberOfRoutesWithDistanceLessThanThirty());
 
         System.out.println("-------------------------");
     }
