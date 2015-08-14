@@ -3,7 +3,7 @@ version '0.1'
 apply plugin: 'application'
 
 jar.archiveName = 'test'
-mainClassName = 'MyClass'
+mainClassName = 'TrainsProblem'
 
 dependencies {
     compile project('graphing')
