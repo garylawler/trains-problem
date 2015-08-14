@@ -71,12 +71,19 @@ public class RailwayService {
                     }
                 });
 
+        // Start creating permutations of possible compound cycle lengths...
         for(int i = 0; i < cycleLengthsUnderThirty.size(); i++) {
             for(int j = 0; j< cycleLengthsUnderThirty.size(); j++) {
                 double total = cycleLengthsUnderThirty.get(i) + cycleLengthsUnderThirty.get(j);
+                // Heuristic to ensure we identify compound cycles composed of the same base cycle
+                // (eg given base cycle c->b->c, compound cycles (1)c->b->(2)c->b->c
+                // and (2)c->b->(1)->c->b->c are identical) and only count them once.
+                //
+                // this approach is buggy as it will not be able to distinguish between
+                // differing routes of identical length.
                 if(total < 30 &&
-                        !(cycleLengthsUnderThirty.get(i) != cycleLengthsUnderThirty.get(j) &&
-                                cycleLengthsUnderThirty.get(i) % cycleLengthsUnderThirty.get(j) == 0)) {
+                   !(cycleLengthsUnderThirty.get(i) != cycleLengthsUnderThirty.get(j) && // if we are not squaring a known cycle length but...
+                    cycleLengthsUnderThirty.get(i) % cycleLengthsUnderThirty.get(j) == 0)) { // ...this length is evenly divisible by the length of a base cycle (bug)
                     cycleLengthsUnderThirty.add(total);
                 }
             }

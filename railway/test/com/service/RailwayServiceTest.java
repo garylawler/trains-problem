@@ -76,4 +76,14 @@ public class RailwayServiceTest {
         // a->b->c and a->b->c->a->b->c
         assertThat(railwayService.getNumberOfRoutesIncludingStationWithDistanceLessThanThirty(Station.A), is(2d));
     }
+
+    @Test
+    public void getShortestLoopLengthIncludingGivenStationNoSuchRoute() {
+        List<Station> stationListIncludingA = new ArrayList<>(Arrays.asList(Station.A, Station.B, Station.C));
+        List<Station> stationListExcludingA = new ArrayList<>(Arrays.asList(Station.B, Station.C, Station.D));
+        when(graphFacade.getCycles()).thenReturn(Arrays.asList(stationListIncludingA, stationListExcludingA));
+        when(graphFacade.getEdgeWeight(any(Station.class), any(Station.class))).thenReturn(10d);
+
+        assertThat(railwayService.getNumberOfRoutesIncludingStationWithDistanceLessThanThirty(Station.A), is(0d));
+    }
 }
