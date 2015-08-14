@@ -1,13 +1,17 @@
 package com.service;
 
-import com.model.Station;
 import com.exception.PathNotFoundException;
 import com.facade.GraphFacade;
+import com.model.Station;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
@@ -49,24 +53,26 @@ public class RailwayServiceTest {
         assertThat(railwayService.getShortestNonLoopingRouteLength(Station.A, Station.B), is(4d));
     }
 
+    @Test
     public void getPathsWithStops() {
         when(graphFacade.getPathsWithStops(Station.A, Station.B, 5)).thenReturn(4d);
-        assertThat(railwayService.getPathsWithStops(Station.A, Station.B, 5), is(4d));
+        assertThat(railwayService.getRoutesWithStops(Station.A, Station.B, 5), is(4d));
     }
 
-    public double getNumberOfRoutesWithExactNumberOfStops() {
-        when(graphFacade.getPathsWithExactNodes(Station.A, Station.B, 5)).thenReturn(4d);
-        return railwayService.getNumberOfRoutesWithExactNumberOfStops(Station.A, Station.B, 5);
+    @Test
+    public void getNumberOfRoutesWithExactNumberOfStops() {
+        when(graphFacade.getPathsWithExactNodes(Station.A, Station.B, 5)).thenReturn(2d);
+        assertThat(railwayService.getNumberOfRoutesWithExactNumberOfStops(Station.A, Station.B, 5), is(2d));
     }
-//
-//    public double getShortestLoopLengthIncludingGivenStation(Station vertex) {
-//        double cycleLength = Double.MAX_VALUE;
-//        for(List<Station> nodeList : railway.getCycles()) {
-//            if(nodeList.contains(vertex)) {
-//                double latestCycleLength = getCycleLength(nodeList);
-//                cycleLength = latestCycleLength < cycleLength ? latestCycleLength : cycleLength;
-//            }
-//        }
-//        return cycleLength;
-//    }
+
+    @Test
+    public void getShortestLoopLengthIncludingGivenStation() {
+        List<Station> stationList = new ArrayList<>(Arrays.asList(Station.A, Station.B, Station.C));
+        when(graphFacade.getCycles()).thenReturn(Arrays.asList(stationList));
+        when(graphFacade.getEdgeWeight(any(Station.class), any(Station.class))).thenReturn(4d);
+
+        // One loop a->b->c has a cost of 12. Therefore there are two valid loops with a cost less than 30:
+        // a->b->c and a->b->c->a->b->c
+        assertThat(railwayService.x(), is(2d));
+    }
 }

@@ -2,10 +2,10 @@ package com.facade;
 
 import com.algorithm.CountPathsWithAtLeastAGivenNumberOfStops;
 import com.algorithm.CountPathsWithNumberOfStops;
-import com.algorithm.CycleCountAlgorithm;
-import com.algorithm.ShortestPathAlgorithm;
+import com.algorithm.CycleCount;
+import com.algorithm.ShortestPath;
+import com.algorithm.impl.AlgorithmFactory;
 import com.exception.PathNotFoundException;
-import com.factory.AlgorithmFactory;
 import org.jgrapht.graph.DefaultWeightedEdge;
 import org.jgrapht.graph.SimpleDirectedWeightedGraph;
 
@@ -35,24 +35,22 @@ public class GraphFacade<V> {
     }
 
     public double getShortestAcyclicPathLength(V startNode, V endNode) {
-        ShortestPathAlgorithm<V> shortestPathAlgorithm = algorithmFactory.createShortestPathAlgorithm(startNode, endNode);
-        return shortestPathAlgorithm.getShortestPathLength();
+        ShortestPath<V> shortestPath = algorithmFactory.createShortestPathAlgorithm(startNode, endNode);
+        return shortestPath.getShortestPathLength();
     }
 
     public double getPathsWithStops(V startNode, V endNode, int numberOfStops ) {
         CountPathsWithAtLeastAGivenNumberOfStops<V, DefaultWeightedEdge> depthFirstPathCounter2 = algorithmFactory.createCountPathsWithAtLeastAGivenNumberOfStops(startNode, endNode, numberOfStops);
-        depthFirstPathCounter2.traverse();
         return depthFirstPathCounter2.getNoOfRoutes();
     }
 
     public double getPathsWithExactNodes(V startNode, V endNode, int numberOfStops ) {
         CountPathsWithNumberOfStops<V, DefaultWeightedEdge> depthFirstPathCounter = algorithmFactory.createCountPathsWithNumberOfStops(startNode, endNode, numberOfStops);
-        depthFirstPathCounter.traverse();
         return depthFirstPathCounter.getNoOfRoutesAtTargetDepth();
     }
 
     public List<List<V>> getCycles() {
-        CycleCountAlgorithm<V> simpleCycles = algorithmFactory.createCycleCountAlgorithm();
+        CycleCount<V> simpleCycles = algorithmFactory.createCycleCountAlgorithm();
         return simpleCycles.getCycles();
     }
 

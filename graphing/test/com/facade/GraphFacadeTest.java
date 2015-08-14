@@ -1,11 +1,11 @@
 package com.facade;
 
-import com.algorithm.CountPathsWithAtLeastAGivenNumberOfStops;
-import com.algorithm.CountPathsWithNumberOfStops;
-import com.algorithm.CycleCountAlgorithm;
-import com.algorithm.ShortestPathAlgorithm;
+import com.algorithm.impl.CountPathsWithAtLeastAGivenNumberOfStopsImpl;
+import com.algorithm.impl.CountPathsWithNumberOfStopsImpl;
+import com.algorithm.CycleCount;
+import com.algorithm.ShortestPath;
 import com.exception.PathNotFoundException;
-import com.factory.AlgorithmFactory;
+import com.algorithm.impl.AlgorithmFactory;
 import org.jgrapht.alg.DijkstraShortestPath;
 import org.jgrapht.alg.cycle.TarjanSimpleCycles;
 import org.jgrapht.graph.DefaultWeightedEdge;
@@ -27,7 +27,7 @@ import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.*;
 
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({DijkstraShortestPath.class, TarjanSimpleCycles.class, CountPathsWithAtLeastAGivenNumberOfStops.class, CountPathsWithNumberOfStops.class})
+@PrepareForTest({DijkstraShortestPath.class, TarjanSimpleCycles.class, CountPathsWithAtLeastAGivenNumberOfStopsImpl.class, CountPathsWithNumberOfStopsImpl.class})
 public class GraphFacadeTest {
 
     private static final String A = "A";
@@ -36,15 +36,17 @@ public class GraphFacadeTest {
     private @Mock SimpleDirectedWeightedGraph<String, DefaultWeightedEdge> simpleDirectedWeightedGraph;
     private @Mock AlgorithmFactory<String> algorithmFactory;
     private @Mock DefaultWeightedEdge defaultWeightedEdge;
-    private @Mock ShortestPathAlgorithm<String> shortestPath;
-    private @Mock CycleCountAlgorithm<String> cycleCount;
-    private CountPathsWithAtLeastAGivenNumberOfStops maximumStops;
-    private CountPathsWithNumberOfStops exactStops;
+    private @Mock
+    ShortestPath<String> shortestPath;
+    private @Mock
+    CycleCount<String> cycleCount;
+    private CountPathsWithAtLeastAGivenNumberOfStopsImpl maximumStops;
+    private CountPathsWithNumberOfStopsImpl exactStops;
 
     @Before
     public void onSetUp() {
-        maximumStops = PowerMockito.mock(CountPathsWithAtLeastAGivenNumberOfStops.class);
-        exactStops = PowerMockito.mock(CountPathsWithNumberOfStops.class);
+        maximumStops = PowerMockito.mock(CountPathsWithAtLeastAGivenNumberOfStopsImpl.class);
+        exactStops = PowerMockito.mock(CountPathsWithNumberOfStopsImpl.class);
 
         graphFacade = new GraphFacade<>(simpleDirectedWeightedGraph, algorithmFactory);
         when(algorithmFactory.createShortestPathAlgorithm(anyString(), anyString())).thenReturn(shortestPath);

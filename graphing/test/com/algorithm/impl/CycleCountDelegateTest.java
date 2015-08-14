@@ -1,4 +1,4 @@
-package com.algorithm;
+package com.algorithm.impl;
 
 import org.jgrapht.alg.cycle.TarjanSimpleCycles;
 import org.jgrapht.graph.DefaultWeightedEdge;
@@ -20,7 +20,7 @@ import static org.mockito.Mockito.when;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(TarjanSimpleCycles.class)
-public class CycleCountAlgorithmDelegateTest {
+public class CycleCountDelegateTest {
 
     private static final String A = "A";
     private static final String B = "B";

@@ -1,5 +1,6 @@
-package com.algorithm;
+package com.algorithm.impl;
 
+import com.algorithm.impl.DijkstraShortestPathDelegate;
 import org.jgrapht.alg.DijkstraShortestPath;
 import org.jgrapht.graph.DefaultWeightedEdge;
 import org.jgrapht.graph.SimpleDirectedWeightedGraph;

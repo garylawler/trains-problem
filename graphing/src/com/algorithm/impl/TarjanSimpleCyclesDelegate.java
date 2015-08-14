@@ -1,12 +1,13 @@
-package com.algorithm;
+package com.algorithm.impl;
 
+import com.algorithm.CycleCount;
 import org.jgrapht.alg.cycle.TarjanSimpleCycles;
 import org.jgrapht.graph.DefaultWeightedEdge;
 import org.jgrapht.graph.SimpleDirectedWeightedGraph;
 
 import java.util.List;
 
-public final class TarjanSimpleCyclesDelegate<V> implements CycleCountAlgorithm<V> {
+final class TarjanSimpleCyclesDelegate<V> implements CycleCount<V> {
 
     private TarjanSimpleCycles<V, DefaultWeightedEdge> simpleCycles;
 

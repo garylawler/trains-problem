@@ -2,7 +2,7 @@ package com.config;
 
 import com.model.Station;
 import com.facade.GraphFacade;
-import com.factory.AlgorithmFactory;
+import com.algorithm.impl.AlgorithmFactory;
 import com.service.RailwayService;
 import org.jgrapht.graph.DefaultWeightedEdge;
 import org.jgrapht.graph.SimpleDirectedWeightedGraph;
@@ -17,7 +17,7 @@ public class AppConfig {
 
     @Bean
     @Autowired
-    RailwayService getRailwayService(GraphFacade graphFacade, AlgorithmFactory algorithmFactory) {
+    RailwayService getRailwayService(GraphFacade graphFacade) {
         return new RailwayService(graphFacade);
     }
 
@@ -44,7 +44,7 @@ public class AppConfig {
 
     @Bean
     @Autowired
-    AlgorithmFactory getAlgorithmFactory(SimpleDirectedWeightedGraph<Station, DefaultWeightedEdge> graph) {
+    AlgorithmFactory<Station> getAlgorithmFactory(SimpleDirectedWeightedGraph<Station, DefaultWeightedEdge> graph) {
         return new AlgorithmFactory<>(graph);
     }
 }

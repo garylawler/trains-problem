@@ -2,9 +2,13 @@ import com.config.AppConfig;
 import com.exception.PathNotFoundException;
 import com.model.Station;
 import com.service.RailwayService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class MyClass {
+
+    static Logger logger = LoggerFactory.getLogger(MyClass.class);
 
     public static void main(String[] args) {
         AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(AppConfig.class);
@@ -23,22 +27,16 @@ public class MyClass {
         }
 
         System.out.println("6-7 -------------------------");
-        System.out.println("6:" + railwayService.getPathsWithStops(Station.C, Station.C, 3));
+        System.out.println("6:" + railwayService.getRoutesWithStops(Station.C, Station.C, 3));
         System.out.println("7:" + railwayService.getNumberOfRoutesWithExactNumberOfStops(Station.A, Station.C, 4));
 
         System.out.println("8-9 ----------------------");
         System.out.println("8:" + railwayService.getShortestNonLoopingRouteLength(Station.A, Station.C));
         System.out.println("9:" + railwayService.getShortestLoopLengthIncludingGivenStation(Station.B));
-        System.out.println("9:" + railwayService.getShortestLoopLengthIncludingGivenStation(Station.C));
-
 
         System.out.println("10 ------------------------");
-
-
         System.out.println(railwayService.x());
 
-
         System.out.println("-------------------------");
-        System.out.print("");    }
-
+    }
 }

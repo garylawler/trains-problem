@@ -1,11 +1,6 @@
-package com.factory;
+package com.algorithm.impl;
 
-import com.algorithm.CountPathsWithAtLeastAGivenNumberOfStops;
-import com.algorithm.CountPathsWithNumberOfStops;
-import com.algorithm.CycleCountAlgorithm;
-import com.algorithm.ShortestPathAlgorithm;
-import com.algorithm.DijkstraShortestPathDelegate;
-import com.algorithm.TarjanSimpleCyclesDelegate;
+import com.algorithm.*;
 import org.jgrapht.graph.DefaultWeightedEdge;
 import org.jgrapht.graph.SimpleDirectedWeightedGraph;
 
@@ -17,19 +12,19 @@ public class AlgorithmFactory<V> {
         this.graph = graph;
     }
 
-    public ShortestPathAlgorithm<V> createShortestPathAlgorithm(V startNode, V endNode) {
+    public ShortestPath<V> createShortestPathAlgorithm(V startNode, V endNode) {
         return new DijkstraShortestPathDelegate<>(graph, startNode, endNode);
     }
 
-    public CycleCountAlgorithm<V> createCycleCountAlgorithm() {
+    public CycleCount<V> createCycleCountAlgorithm() {
         return new TarjanSimpleCyclesDelegate<>(graph);
     }
 
     public CountPathsWithNumberOfStops<V, DefaultWeightedEdge> createCountPathsWithNumberOfStops(V startNode, V endNode, int maxDepth) {
-        return new CountPathsWithNumberOfStops<>(graph, startNode, endNode, maxDepth);
+        return new CountPathsWithNumberOfStopsImpl<>(graph, startNode, endNode, maxDepth);
     }
 
     public CountPathsWithAtLeastAGivenNumberOfStops<V, DefaultWeightedEdge> createCountPathsWithAtLeastAGivenNumberOfStops(V startNode, V endNode, int maxDepth) {
-        return new CountPathsWithAtLeastAGivenNumberOfStops<>(graph, startNode, endNode, maxDepth);
+        return new CountPathsWithAtLeastAGivenNumberOfStopsImpl<>(graph, startNode, endNode, maxDepth);
     }
 }

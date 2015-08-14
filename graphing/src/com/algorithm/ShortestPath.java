@@ -1,6 +1,6 @@
 package com.algorithm;
 
-public interface ShortestPathAlgorithm<V> {
+public interface ShortestPath<V> {
 
     double getShortestPathLength();
 }

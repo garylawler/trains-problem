@@ -1,4 +1,4 @@
-package com.algorithm;
+package com.algorithm.impl;
 
 import org.jgrapht.DirectedGraph;
 
@@ -7,22 +7,18 @@ import java.util.Set;
 abstract class ModifiedDepthFirstTraversalTemplate<V, E> {
 
     private int maxDepth = 0;
-    private V startDepth;
+    private V startVertex;
     private V endVertex;
     private DirectedGraph<V,E> directedGraph;
 
-    public ModifiedDepthFirstTraversalTemplate(DirectedGraph<V, E> directedGraph, V startDepth, V endVertex, int maxDepth) {
-        this.startDepth = startDepth;
+    public ModifiedDepthFirstTraversalTemplate(DirectedGraph<V, E> directedGraph, V startVertex, V endVertex, int maxDepth) {
+        this.startVertex = startVertex;
         this.endVertex = endVertex;
         this.maxDepth = maxDepth;
         this.directedGraph = directedGraph;
     }
 
-    public boolean traverse(){
-        return traverseInternal(startDepth, maxDepth);
-    }
-
-    private boolean traverseInternal(V v, int depth){
+    protected boolean traverseInternal(V v, int depth){
         if(v == endVertex) {
             onEndVertexEncountered(depth);
         }

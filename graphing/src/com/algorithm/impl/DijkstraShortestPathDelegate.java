@@ -1,10 +1,11 @@
-package com.algorithm;
+package com.algorithm.impl;
 
+import com.algorithm.ShortestPath;
 import org.jgrapht.alg.DijkstraShortestPath;
 import org.jgrapht.graph.DefaultWeightedEdge;
 import org.jgrapht.graph.SimpleDirectedWeightedGraph;
 
-public final class DijkstraShortestPathDelegate<V> implements ShortestPathAlgorithm<V> {
+final class DijkstraShortestPathDelegate<V> implements ShortestPath<V> {
 
     private DijkstraShortestPath dijkstraShortestPath;
 

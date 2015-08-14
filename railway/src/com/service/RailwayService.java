@@ -16,9 +16,9 @@ public class RailwayService {
 
     public double getRouteLength(Station... stations) throws PathNotFoundException {
         double distance = 0;
-        int numberOfNodes = stations.length;
-        if(numberOfNodes > 1) {
-            for(int i=1; i< numberOfNodes; i++) {
+        int numberOfStations = stations.length;
+        if(numberOfStations > 1) {
+            for(int i=1; i< numberOfStations; i++) {
                 distance += railwayGraph.getEdgeWeight(stations[i - 1], stations[i]);
             }
         }
@@ -29,7 +29,7 @@ public class RailwayService {
         return railwayGraph.getShortestAcyclicPathLength(startStation, endStation);
     }
 
-    public double getPathsWithStops(Station startStation, Station endStation, int numberOfStops ) {
+    public double getRoutesWithStops(Station startStation, Station endStation, int numberOfStops) {
         return railwayGraph.getPathsWithStops(startStation, endStation, numberOfStops);
     }
 
@@ -37,14 +37,14 @@ public class RailwayService {
         return railwayGraph.getPathsWithExactNodes(startStation, endStation, numberOfStops);
     }
 
-    public double getCycleLength(List<Station> nodes) {
+    private double getCycleLength(List<Station> stations) {
         int lengthOfCycle = 0;
-        int numberOfNodes = nodes.size();
-        if(numberOfNodes > 1) {
-            for(int i=1; i< numberOfNodes; i++) {
-                lengthOfCycle += railwayGraph.getEdgeWeight(nodes.get(i - 1), nodes.get(i));
+        int numberOfStations = stations.size();
+        if(numberOfStations > 1) {
+            for(int i=1; i< numberOfStations; i++) {
+                lengthOfCycle += railwayGraph.getEdgeWeight(stations.get(i - 1), stations.get(i));
             }
-            lengthOfCycle += railwayGraph.getEdgeWeight(nodes.get(numberOfNodes - 1), nodes.get(0));
+            lengthOfCycle += railwayGraph.getEdgeWeight(stations.get(numberOfStations - 1), stations.get(0));
         }
         return lengthOfCycle;
     }
@@ -61,9 +61,6 @@ public class RailwayService {
     }
 
     public double x() {
-//        class computedPath {
-//            public computedPath(double length, boolean )
-//        }
 
         List<Double> pathLengthsUnderThirty = new ArrayList<>();
         railwayGraph.getCycles().stream()
@@ -78,13 +75,9 @@ public class RailwayService {
         for(int i = 0; i < pathLengthsUnderThirty.size(); i++) {
             for(int j = 0; j< pathLengthsUnderThirty.size(); j++) {
                 double total = pathLengthsUnderThirty.get(i) + pathLengthsUnderThirty.get(j);
-
-                System.out.println(pathLengthsUnderThirty.get(i) + " + " + pathLengthsUnderThirty.get(j) + " = " + total);
-
-                if(total < 30 && // This clause fails if two distinct paths have the same length
+                if(total < 30 &&
                         !(pathLengthsUnderThirty.get(i) != pathLengthsUnderThirty.get(j) &&
                                 pathLengthsUnderThirty.get(i) % pathLengthsUnderThirty.get(j) == 0)) {
-                    System.out.println("acceptable\n");
                     pathLengthsUnderThirty.add(total);
                 }
             }

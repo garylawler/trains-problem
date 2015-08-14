@@ -2,7 +2,7 @@ package com.algorithm;
 
 import java.util.List;
 
-public interface CycleCountAlgorithm<V> {
+public interface CycleCount<V> {
 
     List<List<V>> getCycles();
 }

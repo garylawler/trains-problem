@@ -1,5 +1,6 @@
 package com.algorithm;
 
+import com.algorithm.impl.CountPathsWithAtLeastAGivenNumberOfStopsImpl;
 import org.jgrapht.graph.DefaultWeightedEdge;
 import org.jgrapht.graph.SimpleDirectedWeightedGraph;
 import org.junit.Before;
@@ -11,14 +12,14 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 @RunWith(MockitoJUnitRunner.class)
-public class CountPathsWithAtLeastAGivenNumberOfStopsTest {
+public class CountPathsWithAtLeastAGivenNumberOfStopsImplTest {
 
     private static final String A = "A";
     private static final String B = "B";
     private static final String C = "C";
     private static final String D = "D";
     private static final String E = "E";
-    private CountPathsWithAtLeastAGivenNumberOfStops pathsWithAtLeastAGivenNumberOfStops;
+    private CountPathsWithAtLeastAGivenNumberOfStopsImpl pathsWithAtLeastAGivenNumberOfStops;
     private SimpleDirectedWeightedGraph<String, DefaultWeightedEdge> graph;
 
     @Before
@@ -28,13 +29,11 @@ public class CountPathsWithAtLeastAGivenNumberOfStopsTest {
         graph.addVertex(B);
         graph.setEdgeWeight(graph.addEdge(A, B), 1);
         graph.setEdgeWeight(graph.addEdge(B, A), 2);
-
-        pathsWithAtLeastAGivenNumberOfStops = new CountPathsWithAtLeastAGivenNumberOfStops<>(graph, "A", "B", 2);
     }
 
     @Test
     public void oneSimplePath() {
-        pathsWithAtLeastAGivenNumberOfStops.traverse();
+        pathsWithAtLeastAGivenNumberOfStops = new CountPathsWithAtLeastAGivenNumberOfStopsImpl<>(graph, "A", "B", 2);
         assertThat(pathsWithAtLeastAGivenNumberOfStops.getNoOfRoutes(), is(1d));
     }
 
@@ -44,24 +43,23 @@ public class CountPathsWithAtLeastAGivenNumberOfStopsTest {
         graph.setEdgeWeight(graph.addEdge(A, C), 3);
         graph.setEdgeWeight(graph.addEdge(C, B), 4);
 
-        pathsWithAtLeastAGivenNumberOfStops.traverse();
+        pathsWithAtLeastAGivenNumberOfStops = new CountPathsWithAtLeastAGivenNumberOfStopsImpl<>(graph, "A", "B", 2);
         assertThat(pathsWithAtLeastAGivenNumberOfStops.getNoOfRoutes(), is(1d));
     }
 
     @Test
     public void withAdditionalCircuitSearchShouldEncompassCircuit() {
-        pathsWithAtLeastAGivenNumberOfStops = new CountPathsWithAtLeastAGivenNumberOfStops<>(graph, "A", "B", 3);
         graph.addVertex(C);
         graph.setEdgeWeight(graph.addEdge(A, C), 3);
         graph.setEdgeWeight(graph.addEdge(C, B), 4);
 
-        pathsWithAtLeastAGivenNumberOfStops.traverse();
+        pathsWithAtLeastAGivenNumberOfStops = new CountPathsWithAtLeastAGivenNumberOfStopsImpl<>(graph, "A", "B", 3);
         assertThat(pathsWithAtLeastAGivenNumberOfStops.getNoOfRoutes(), is(2d));
     }
 
     @Test
     public void additionalPathExceedsSearchRadius() {
-        pathsWithAtLeastAGivenNumberOfStops = new CountPathsWithAtLeastAGivenNumberOfStops<>(graph, "A", "B", 3);
+        pathsWithAtLeastAGivenNumberOfStops = new CountPathsWithAtLeastAGivenNumberOfStopsImpl<>(graph, "A", "B", 3);
         graph.addVertex(C);
         graph.addVertex(D);
         graph.addVertex(E);
@@ -69,7 +67,7 @@ public class CountPathsWithAtLeastAGivenNumberOfStopsTest {
         graph.setEdgeWeight(graph.addEdge(C, D), 4);
         graph.setEdgeWeight(graph.addEdge(D, E), 5);
 
-        pathsWithAtLeastAGivenNumberOfStops.traverse();
+        pathsWithAtLeastAGivenNumberOfStops = new CountPathsWithAtLeastAGivenNumberOfStopsImpl<>(graph, "A", "B", 2);
         assertThat(pathsWithAtLeastAGivenNumberOfStops.getNoOfRoutes(), is(1d));
     }
 }

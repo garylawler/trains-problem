@@ -1,9 +1,10 @@
-package com.factory;
+package com.algorithm.impl;
 
 import com.algorithm.CountPathsWithAtLeastAGivenNumberOfStops;
 import com.algorithm.CountPathsWithNumberOfStops;
-import com.algorithm.CycleCountAlgorithm;
-import com.algorithm.ShortestPathAlgorithm;
+import com.algorithm.CycleCount;
+import com.algorithm.ShortestPath;
+import org.hamcrest.MatcherAssert;
 import org.jgrapht.graph.DefaultWeightedEdge;
 import org.jgrapht.graph.SimpleDirectedWeightedGraph;
 import org.junit.Before;
@@ -12,7 +13,6 @@ import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import static org.hamcrest.CoreMatchers.isA;
-import static org.hamcrest.MatcherAssert.assertThat;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AlgorithmFactoryTest {
@@ -31,21 +31,21 @@ public class AlgorithmFactoryTest {
 
     @Test
     public void createShortestPathAlgorithm() {
-        assertThat(algorithmFactory.createShortestPathAlgorithm(A, B), isA(ShortestPathAlgorithm.class));
+        MatcherAssert.assertThat(algorithmFactory.createShortestPathAlgorithm(A, B), isA(ShortestPath.class));
     }
 
     @Test
     public void createCycleCountAlgorithm() {
-        assertThat(algorithmFactory.createCycleCountAlgorithm(), isA(CycleCountAlgorithm.class));
+        MatcherAssert.assertThat(algorithmFactory.createCycleCountAlgorithm(), isA(CycleCount.class));
     }
 
     @Test
     public void createDepthFirstPathCounterExactStops() {
-        assertThat(algorithmFactory.createCountPathsWithNumberOfStops(A, B, 5), isA(CountPathsWithNumberOfStops.class));
+        MatcherAssert.assertThat(algorithmFactory.createCountPathsWithNumberOfStops(A, B, 5), isA(CountPathsWithNumberOfStops.class));
     }
 
     @Test
     public void createDepthFirstPathCounterMaximumStops() {
-        assertThat(algorithmFactory.createCountPathsWithAtLeastAGivenNumberOfStops(A, B, 5), isA(CountPathsWithAtLeastAGivenNumberOfStops.class));
+        MatcherAssert.assertThat(algorithmFactory.createCountPathsWithAtLeastAGivenNumberOfStops(A, B, 5), isA(CountPathsWithAtLeastAGivenNumberOfStops.class));
     }
 }
