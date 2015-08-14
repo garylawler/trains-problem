@@ -10,8 +10,14 @@ sourceSets {
 
 dependencies {
     compile project(':graphing')
+    compile 'org.slf4j:jcl-over-slf4j:1.7.12'
+    compile 'org.slf4j:slf4j-log4j12:1.7.12'
     compile 'org.apache.commons:commons-csv:1.1'
     compile 'org.springframework:spring-beans:4.2.0.RELEASE'
     compile 'org.springframework:spring-context:4.2.0.RELEASE'
     testCompile 'org.mockito:mockito-all:1.10.19'
+}
+
+configurations {
+    compile.exclude group: 'commons-logging'
 }
