@@ -60,13 +60,13 @@ public class RailwayService {
         return currentShortestCycleLength;
     }
 
-    public double getNumberOfRoutesIncludingStationWithDistanceLessThanThirty(Station station) {
+    public double getNumberOfRoutesIncludingStationWithinRadius(Station station, int radius) {
         List<Double> cycleLengthsUnderThirty = new ArrayList<>();
         stationGraphFacade.getCycles().stream()
                 .filter(cycle -> cycle.contains(station))
                 .forEach(cycle -> {
                     Double cycleLength = getCycleLength(cycle);
-                    if (cycleLength < 30) {
+                    if (cycleLength < radius) {
                         cycleLengthsUnderThirty.add(cycleLength);
                     }
                 });
@@ -81,7 +81,7 @@ public class RailwayService {
                 //
                 // this approach is buggy as it will not be able to distinguish between
                 // differing routes of identical length.
-                if(total < 30 &&
+                if(total < radius &&
                    !(cycleLengthsUnderThirty.get(i) != cycleLengthsUnderThirty.get(j) && // if we are not squaring a known cycle length but...
                     cycleLengthsUnderThirty.get(i) % cycleLengthsUnderThirty.get(j) == 0)) { // ...this length is evenly divisible by the length of a base cycle (bug)
                     cycleLengthsUnderThirty.add(total);

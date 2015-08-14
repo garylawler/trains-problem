@@ -67,6 +67,25 @@ public class RailwayServiceTest {
 
     @Test
     public void getShortestLoopLengthIncludingGivenStation() {
+        List<Station> shortCycle = new ArrayList<>(Arrays.asList(Station.A, Station.B, Station.C));
+        List<Station> longCycle = new ArrayList<>(Arrays.asList(Station.B, Station.C, Station.D));
+
+        when(graphFacade.getCycles()).thenReturn(new ArrayList<>(Arrays.asList(shortCycle, longCycle)));
+        when(graphFacade.getEdgeWeight(Station.A, Station.B)).thenReturn(1d);
+        when(graphFacade.getEdgeWeight(Station.B, Station.C)).thenReturn(2d);
+        when(graphFacade.getEdgeWeight(Station.C, Station.D)).thenReturn(3d);
+
+        assertThat(railwayService.getShortestLoopLengthIncludingGivenStation(Station.B), is(3d));
+    }
+
+    @Test
+    public void getShortestLoopLengthIncludingGivenStationNoCycles() {
+        when(graphFacade.getCycles()).thenReturn(new ArrayList<>());
+        assertThat(railwayService.getShortestLoopLengthIncludingGivenStation(Station.B), is(Double.MAX_VALUE));
+    }
+
+    @Test
+    public void getNumberOfRoutesIncludingStationWithinRadius() {
         List<Station> stationListIncludingA = new ArrayList<>(Arrays.asList(Station.A, Station.B, Station.C));
         List<Station> stationListExcludingA = new ArrayList<>(Arrays.asList(Station.B, Station.C, Station.D));
         when(graphFacade.getCycles()).thenReturn(Arrays.asList(stationListIncludingA, stationListExcludingA));
@@ -74,16 +93,16 @@ public class RailwayServiceTest {
 
         // One loop a->b->c has a cost of 12. Therefore there are two valid loops with a cost less than 30:
         // a->b->c and a->b->c->a->b->c
-        assertThat(railwayService.getNumberOfRoutesIncludingStationWithDistanceLessThanThirty(Station.A), is(2d));
+        assertThat(railwayService.getNumberOfRoutesIncludingStationWithinRadius(Station.A, 30), is(2d));
     }
 
     @Test
-    public void getShortestLoopLengthIncludingGivenStationNoSuchRoute() {
+    public void getNumberOfRoutesIncludingStationWithinRadiusNoSuchRoute() {
         List<Station> stationListIncludingA = new ArrayList<>(Arrays.asList(Station.A, Station.B, Station.C));
         List<Station> stationListExcludingA = new ArrayList<>(Arrays.asList(Station.B, Station.C, Station.D));
         when(graphFacade.getCycles()).thenReturn(Arrays.asList(stationListIncludingA, stationListExcludingA));
         when(graphFacade.getEdgeWeight(any(Station.class), any(Station.class))).thenReturn(10d);
 
-        assertThat(railwayService.getNumberOfRoutesIncludingStationWithDistanceLessThanThirty(Station.A), is(0d));
+        assertThat(railwayService.getNumberOfRoutesIncludingStationWithinRadius(Station.A, 30), is(0d));
     }
 }
