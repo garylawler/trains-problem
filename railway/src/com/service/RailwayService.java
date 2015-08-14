@@ -8,10 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RailwayService {
-    private GraphFacade<Station> railwayGraph;
+    private GraphFacade<Station> stationGraphFacade;
 
     public RailwayService(GraphFacade<Station> graphFacade) {
-        this.railwayGraph = graphFacade;
+        this.stationGraphFacade = graphFacade;
     }
 
     public double getRouteLength(Station... stations) throws PathNotFoundException {
@@ -19,7 +19,7 @@ public class RailwayService {
         int numberOfStations = stations.length;
         if(numberOfStations > 1) {
             for(int i=1; i< numberOfStations; i++) {
-                totalDistance += railwayGraph.getEdgeWeight(stations[i - 1], stations[i]);
+                totalDistance += stationGraphFacade.getEdgeWeight(stations[i - 1], stations[i]);
             }
         }
         return totalDistance;
@@ -30,27 +30,28 @@ public class RailwayService {
         int numberOfStations = stations.size();
         if(numberOfStations > 1) {
             for(int i=1; i< numberOfStations; i++) {
-                lengthOfCycle += railwayGraph.getEdgeWeight(stations.get(i - 1), stations.get(i));
+                lengthOfCycle += stationGraphFacade.getEdgeWeight(stations.get(i - 1), stations.get(i));
             }
-            lengthOfCycle += railwayGraph.getEdgeWeight(stations.get(numberOfStations - 1), stations.get(0));
+            lengthOfCycle += stationGraphFacade.getEdgeWeight(stations.get(numberOfStations - 1), stations.get(0));
         }
         return lengthOfCycle;
     }
-public double getShortestNonLoopingRouteLength(Station startStation, Station endStation) {
-        return railwayGraph.getShortestAcyclicPathLength(startStation, endStation);
+
+    public double getShortestNonLoopingRouteLength(Station startStation, Station endStation) {
+        return stationGraphFacade.getShortestAcyclicPathLength(startStation, endStation);
     }
 
     public double getNumberOfRoutesWithStops(Station startStation, Station endStation, int numberOfStops) {
-        return railwayGraph.countPathsWithStops(startStation, endStation, numberOfStops);
+        return stationGraphFacade.countPathsWithStops(startStation, endStation, numberOfStops);
     }
 
     public double getNumberOfRoutesWithExactNumberOfStops(Station startStation, Station endStation, int numberOfStops ) {
-        return railwayGraph.countPathsWithExactVertexs(startStation, endStation, numberOfStops);
+        return stationGraphFacade.countPathsWithExactVertexs(startStation, endStation, numberOfStops);
     }
 
     public double getShortestLoopLengthIncludingGivenStation(Station vertex) {
         double currentShortestCycleLength = Double.MAX_VALUE;
-        for(List<Station> stationList : railwayGraph.getCycles()) {
+        for(List<Station> stationList : stationGraphFacade.getCycles()) {
             if (stationList.contains(vertex)) {
                 double latestCycleLength = getCycleLength(stationList);
                 currentShortestCycleLength = latestCycleLength < currentShortestCycleLength ? latestCycleLength : currentShortestCycleLength;
@@ -59,11 +60,10 @@ public double getShortestNonLoopingRouteLength(Station startStation, Station end
         return currentShortestCycleLength;
     }
 
-    public double getNumberOfRoutesWithDistanceLessThanThirty() {
-
+    public double getNumberOfRoutesIncludingStationWithDistanceLessThanThirty(Station station) {
         List<Double> cycleLengthsUnderThirty = new ArrayList<>();
-        railwayGraph.getCycles().stream()
-                .filter(cycle -> cycle.contains(Station.C))
+        stationGraphFacade.getCycles().stream()
+                .filter(cycle -> cycle.contains(station))
                 .forEach(cycle -> {
                     Double cycleLength = getCycleLength(cycle);
                     if (cycleLength < 30) {

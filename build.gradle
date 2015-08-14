@@ -2,6 +2,14 @@ version '0.1'
 
 apply plugin: 'application'
 
+jar.archiveName = 'test'
+mainClassName = 'MyClass'
+
+dependencies {
+    compile project('graphing')
+    compile project('railway')
+}
+
 allprojects {
     apply plugin: 'java'
 
@@ -9,9 +17,6 @@ allprojects {
         mavenCentral()
     }
 }
-
-jar.archiveName = 'test'
-mainClassName = 'MyClass'
 
 subprojects {
     dependencies {
@@ -31,9 +36,4 @@ subprojects {
             }
         }
     }
-}
-
-dependencies {
-    compile project('graphing')
-    compile project('railway')
 }

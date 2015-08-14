@@ -67,12 +67,13 @@ public class RailwayServiceTest {
 
     @Test
     public void getShortestLoopLengthIncludingGivenStation() {
-        List<Station> stationList = new ArrayList<>(Arrays.asList(Station.A, Station.B, Station.C));
-        when(graphFacade.getCycles()).thenReturn(Arrays.asList(stationList));
+        List<Station> stationListIncludingA = new ArrayList<>(Arrays.asList(Station.A, Station.B, Station.C));
+        List<Station> stationListExcludingA = new ArrayList<>(Arrays.asList(Station.B, Station.C, Station.D));
+        when(graphFacade.getCycles()).thenReturn(Arrays.asList(stationListIncludingA, stationListExcludingA));
         when(graphFacade.getEdgeWeight(any(Station.class), any(Station.class))).thenReturn(4d);
 
         // One loop a->b->c has a cost of 12. Therefore there are two valid loops with a cost less than 30:
         // a->b->c and a->b->c->a->b->c
-        assertThat(railwayService.getNumberOfRoutesWithDistanceLessThanThirty(), is(2d));
+        assertThat(railwayService.getNumberOfRoutesIncludingStationWithDistanceLessThanThirty(Station.A), is(2d));
     }
 }

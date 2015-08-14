@@ -8,4 +8,12 @@ public class PathNotFoundException extends RuntimeException {
         this.startVertex = startVertex;
         this.endVertex = endVertex;
     }
+
+    public Object getStartVertex() {
+        return startVertex;
+    }
+
+    public Object getEndVertex() {
+        return endVertex;
+    }
 }

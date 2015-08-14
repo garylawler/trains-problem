@@ -31,7 +31,7 @@ public class MyClass {
         System.out.println("9:" + railwayService.getShortestLoopLengthIncludingGivenStation(Station.B));
 
         System.out.println("10 ------------------------");
-        System.out.println(railwayService.getNumberOfRoutesWithDistanceLessThanThirty());
+        System.out.println(railwayService.getNumberOfRoutesIncludingStationWithDistanceLessThanThirty(Station.C));
 
         System.out.println("-------------------------");
     }
