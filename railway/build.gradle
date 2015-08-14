@@ -1,7 +1,16 @@
 version '0.1'
 
+sourceSets {
+    main {
+        resources {
+            srcDir 'resources'
+        }
+    }
+}
+
 dependencies {
     compile project(':graphing')
+    compile 'org.apache.commons:commons-csv:1.1'
     compile 'org.springframework:spring-beans:4.2.0.RELEASE'
     compile 'org.springframework:spring-context:4.2.0.RELEASE'
     testCompile 'org.mockito:mockito-all:1.10.19'

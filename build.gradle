@@ -2,8 +2,15 @@ version '0.1'
 
 apply plugin: 'application'
 
-jar.archiveName = 'test'
 mainClassName = 'TrainsProblem'
+
+jar {
+    baseName = 'trains-problem'
+}
+
+distZip {
+    baseName = 'trains-problem'
+}
 
 dependencies {
     compile project('graphing')

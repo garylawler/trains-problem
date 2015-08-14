@@ -1,9 +1,12 @@
 package com.config;
 
-import com.model.Station;
-import com.facade.GraphFacade;
 import com.algorithm.impl.AlgorithmFactory;
+import com.facade.GraphFacade;
+import com.model.Station;
 import com.service.RailwayService;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVRecord;
 import org.jgrapht.graph.DefaultWeightedEdge;
 import org.jgrapht.graph.SimpleDirectedWeightedGraph;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,9 +14,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 @Configuration
 public class AppConfig {
+
+    private static final String RAILWAY_MAP_CSV = "railwayMap.csv";
 
     @Bean
     @Autowired
@@ -25,15 +32,14 @@ public class AppConfig {
     @Autowired
     GraphFacade<Station> getGraphFacade(SimpleDirectedWeightedGraph<Station, DefaultWeightedEdge> graph, AlgorithmFactory<Station> algorithmFactory) throws IOException {
         GraphFacade<Station> railwayGraph = new GraphFacade<>(graph, algorithmFactory);
-        railwayGraph.addEdge(Station.A, Station.B, 5);
-        railwayGraph.addEdge(Station.B, Station.C, 4);
-        railwayGraph.addEdge(Station.C, Station.D, 8);
-        railwayGraph.addEdge(Station.D, Station.C, 8);
-        railwayGraph.addEdge(Station.D, Station.E, 6);
-        railwayGraph.addEdge(Station.A, Station.D, 5);
-        railwayGraph.addEdge(Station.C, Station.E, 2);
-        railwayGraph.addEdge(Station.E, Station.B, 3);
-        railwayGraph.addEdge(Station.A, Station.E, 7);
+
+        InputStream stream = this.getClass().getClassLoader().getResourceAsStream(RAILWAY_MAP_CSV);
+        CSVParser parser = new CSVParser(new InputStreamReader(stream), CSVFormat.DEFAULT);
+        for(CSVRecord csvRecord : parser.getRecords()) {
+            railwayGraph.addEdge(Station.valueOf(csvRecord.get(0)),
+                    Station.valueOf(csvRecord.get(1)),
+                    Integer.parseInt(csvRecord.get(2)));
+        }
         return railwayGraph;
     }
 
