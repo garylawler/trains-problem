@@ -20,32 +20,32 @@ public class GraphFacade<V> {
         this.algorithmFactory = algorithmFactory;
     }
 
-    public double getEdgeWeight(V startNode, V endNode) throws PathNotFoundException{
-        DefaultWeightedEdge selectedEdge = directedGraph.getEdge(startNode, endNode);
+    public double getEdgeWeight(V startVertex, V endVertex) throws PathNotFoundException{
+        DefaultWeightedEdge selectedEdge = directedGraph.getEdge(startVertex, endVertex);
         if(selectedEdge != null) {
             return directedGraph.getEdgeWeight(selectedEdge);
         }
-        throw new PathNotFoundException(startNode, endNode);
+        throw new PathNotFoundException(startVertex, endVertex);
     }
 
-    public void addEdge(V startNode, V endNode, int weight) {
-        addVertex(startNode);
-        addVertex(endNode);
-        directedGraph.setEdgeWeight(directedGraph.addEdge(startNode, endNode), weight);
+    public void addEdge(V startVertex, V endVertex, int weight) {
+        addVertex(startVertex);
+        addVertex(endVertex);
+        directedGraph.setEdgeWeight(directedGraph.addEdge(startVertex, endVertex), weight);
     }
 
-    public double getShortestAcyclicPathLength(V startNode, V endNode) {
-        ShortestPath<V> shortestPath = algorithmFactory.createShortestPathAlgorithm(startNode, endNode);
+    public double getShortestAcyclicPathLength(V startVertex, V endVertex) {
+        ShortestPath<V> shortestPath = algorithmFactory.createShortestPathAlgorithm(startVertex, endVertex);
         return shortestPath.getShortestPathLength();
     }
 
-    public double countPathsWithStops(V startNode, V endNode, int numberOfStops) {
-        CountPathsWithAtLeastAGivenNumberOfStops<V, DefaultWeightedEdge> depthFirstPathCounter2 = algorithmFactory.createCountPathsWithAtLeastAGivenNumberOfStops(startNode, endNode, numberOfStops);
+    public double countPathsWithStops(V startVertex, V endVertex, int numberOfStops) {
+        CountPathsWithAtLeastAGivenNumberOfStops<V, DefaultWeightedEdge> depthFirstPathCounter2 = algorithmFactory.createCountPathsWithAtLeastAGivenNumberOfStops(startVertex, endVertex, numberOfStops);
         return depthFirstPathCounter2.getNoOfRoutes();
     }
 
-    public double countPathsWithExactNodes(V startNode, V endNode, int numberOfStops) {
-        CountPathsWithNumberOfStops<V, DefaultWeightedEdge> depthFirstPathCounter = algorithmFactory.createCountPathsWithNumberOfStops(startNode, endNode, numberOfStops);
+    public double countPathsWithExactVertexs(V startVertex, V endVertex, int numberOfStops) {
+        CountPathsWithNumberOfStops<V, DefaultWeightedEdge> depthFirstPathCounter = algorithmFactory.createCountPathsWithNumberOfStops(startVertex, endVertex, numberOfStops);
         return depthFirstPathCounter.getNoOfRoutesAtTargetDepth();
     }
 

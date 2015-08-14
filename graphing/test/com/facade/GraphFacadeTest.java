@@ -108,10 +108,10 @@ public class GraphFacadeTest {
     }
 
     @Test
-    public void getPathsWithExactNodes() {
+    public void getPathsWithExactVertexs() {
         double expectedNumberOfStops = 5;
         when(exactStops.getNoOfRoutesAtTargetDepth()).thenReturn(expectedNumberOfStops);
-        assertThat(graphFacade.countPathsWithExactNodes(A, B, 5), is(expectedNumberOfStops));
+        assertThat(graphFacade.countPathsWithExactVertexs(A, B, 5), is(expectedNumberOfStops));
         verify(algorithmFactory, times(1)).createCountPathsWithNumberOfStops(A, B, 5);
     }
 

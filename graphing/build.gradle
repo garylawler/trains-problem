@@ -1,3 +1,6 @@
 version '0.1'
 
-apply plugin: 'java'
+dependencies {
+    compile 'org.jgrapht:jgrapht-core:0.9.1'
+    testCompile 'org.powermock:powermock-mockito-release-full:1.6.2'
+}

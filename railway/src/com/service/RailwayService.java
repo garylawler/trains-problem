@@ -36,8 +36,7 @@ public class RailwayService {
         }
         return lengthOfCycle;
     }
-
-    public double getShortestNonLoopingRouteLength(Station startStation, Station endStation) {
+public double getShortestNonLoopingRouteLength(Station startStation, Station endStation) {
         return railwayGraph.getShortestAcyclicPathLength(startStation, endStation);
     }
 
@@ -46,7 +45,7 @@ public class RailwayService {
     }
 
     public double getNumberOfRoutesWithExactNumberOfStops(Station startStation, Station endStation, int numberOfStops ) {
-        return railwayGraph.countPathsWithExactNodes(startStation, endStation, numberOfStops);
+        return railwayGraph.countPathsWithExactVertexs(startStation, endStation, numberOfStops);
     }
 
     public double getShortestLoopLengthIncludingGivenStation(Station vertex) {

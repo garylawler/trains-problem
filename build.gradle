@@ -1,26 +1,22 @@
 version '0.1'
 
+apply plugin: 'application'
+
 allprojects {
     apply plugin: 'java'
-}
-
-subprojects {
-    dependencies {
-        compile 'javax.validation:validation-api:1.1.0.Final'
-        compile 'org.slf4j:jcl-over-slf4j:1.7.12'
-        compile 'org.slf4j:slf4j-simple:1.7.12'
-        compile 'ch.qos.logback:logback-classic:1.1.3'
-        compile 'org.jgrapht:jgrapht-core:0.9.1'
-        compile 'org.springframework:spring-beans:4.2.0.RELEASE'
-        compile 'org.springframework:spring-context:4.2.0.RELEASE'
-        testCompile 'org.hamcrest:hamcrest-core:1.3'
-        testCompile 'junit:junit:4.12'
-        testCompile 'org.powermock:powermock-mockito-release-full:1.6.2'
-        testCompile 'org.springframework:spring-test:4.1.7.RELEASE'
-    }
 
     repositories {
         mavenCentral()
+    }
+}
+
+jar.archiveName = 'test'
+mainClassName = 'MyClass'
+
+subprojects {
+    dependencies {
+        testCompile 'org.hamcrest:hamcrest-core:1.3'
+        testCompile 'junit:junit:4.12'
     }
 
     sourceSets {
@@ -35,4 +31,9 @@ subprojects {
             }
         }
     }
+}
+
+dependencies {
+    compile project('graphing')
+    compile project('railway')
 }

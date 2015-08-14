@@ -2,13 +2,9 @@ import com.config.AppConfig;
 import com.exception.PathNotFoundException;
 import com.model.Station;
 import com.service.RailwayService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class MyClass {
-
-    static Logger logger = LoggerFactory.getLogger(MyClass.class);
 
     public static void main(String[] args) {
         AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(AppConfig.class);

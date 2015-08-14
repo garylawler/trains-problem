@@ -1,11 +1,11 @@
 package com.exception;
 
 public class PathNotFoundException extends RuntimeException {
-    private Object startNode;
-    private Object endNode;
+    private Object startVertex;
+    private Object endVertex;
 
-    public PathNotFoundException(Object startNode, Object endNode) {
-        this.startNode = startNode;
-        this.endNode = endNode;
+    public PathNotFoundException(Object startVertex, Object endVertex) {
+        this.startVertex = startVertex;
+        this.endVertex = endVertex;
     }
 }

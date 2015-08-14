@@ -61,7 +61,7 @@ public class RailwayServiceTest {
 
     @Test
     public void getNumberOfRoutesWithExactNumberOfStops() {
-        when(graphFacade.countPathsWithExactNodes(Station.A, Station.B, 5)).thenReturn(2d);
+        when(graphFacade.countPathsWithExactVertexs(Station.A, Station.B, 5)).thenReturn(2d);
         assertThat(railwayService.getNumberOfRoutesWithExactNumberOfStops(Station.A, Station.B, 5), is(2d));
     }
 

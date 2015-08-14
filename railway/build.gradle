@@ -1,7 +1,8 @@
 version '0.1'
 
-apply plugin: 'application'
-
 dependencies {
     compile project(':graphing')
+    compile 'org.springframework:spring-beans:4.2.0.RELEASE'
+    compile 'org.springframework:spring-context:4.2.0.RELEASE'
+    testCompile 'org.mockito:mockito-all:1.10.19'
 }

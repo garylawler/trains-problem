@@ -9,8 +9,8 @@ final class DijkstraShortestPathDelegate<V> implements ShortestPath<V> {
 
     private DijkstraShortestPath dijkstraShortestPath;
 
-    public DijkstraShortestPathDelegate(SimpleDirectedWeightedGraph<V, DefaultWeightedEdge> graph, V startNode, V endNode) {
-        dijkstraShortestPath = new DijkstraShortestPath<>(graph, startNode, endNode);
+    public DijkstraShortestPathDelegate(SimpleDirectedWeightedGraph<V, DefaultWeightedEdge> graph, V startVertex, V endVertex) {
+        dijkstraShortestPath = new DijkstraShortestPath<>(graph, startVertex, endVertex);
     }
 
     public double getShortestPathLength() {
