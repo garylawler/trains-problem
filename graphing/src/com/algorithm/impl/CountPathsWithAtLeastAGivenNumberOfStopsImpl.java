@@ -3,7 +3,7 @@ package com.algorithm.impl;
 import com.algorithm.CountPathsWithAtLeastAGivenNumberOfStops;
 import org.jgrapht.DirectedGraph;
 
-public final class CountPathsWithAtLeastAGivenNumberOfStopsImpl<V, E> extends ModifiedDepthFirstTraversalTemplate<V, E> implements CountPathsWithAtLeastAGivenNumberOfStops {
+public final class CountPathsWithAtLeastAGivenNumberOfStopsImpl<V, E> extends ModifiedDepthFirstTraversalTemplate<V, E> implements CountPathsWithAtLeastAGivenNumberOfStops<V, E> {
 
     private double noOfRoutes = 0;
 
